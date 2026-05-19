@@ -5,7 +5,7 @@
 - [x] Add `Arduino-CP8000-Develop` as a git submodule.
 - [x] Point the submodule at the Azure DevOps SDK development repository.
 - [x] Document that the current submodule is private and requires DevOps access.
-- [ ] Verify a clean clone with `git clone --recurse-submodules`.
+- [x] Verify a clean clone with `git clone --recurse-submodules`.
 - [ ] Decide whether the public release path uses GitHub release artifacts or a
       public SDK mirror.
 
