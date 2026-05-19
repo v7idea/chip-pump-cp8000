@@ -5,7 +5,7 @@
 - [x] Remove private DevOps submodule dependency from the public repository.
 - [x] Sync first public-safe SDK file set from `Arduino-CP8000-Develop`.
 - [x] Document current vendor-file exclusions.
-- [ ] Verify a clean public clone without private credentials.
+- [x] Verify a clean public clone without private credentials.
 - [ ] Confirm vendor SDK, static library, flash algorithm, and toolchain
       redistribution terms.
 
