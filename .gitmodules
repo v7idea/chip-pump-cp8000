@@ -1,0 +1,3 @@
+[submodule "Arduino-CP8000-Develop"]
+	path = Arduino-CP8000-Develop
+	url = https://dev.azure.com/v7idea/Arduino-CP8000-Develop/_git/Arduino-CP8000-Develop
