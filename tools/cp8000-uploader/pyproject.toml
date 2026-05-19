@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cp8000-uploader"
+version = "0.1.0"
+description = "Command-line uploader for CHIP-PUMP CP8000 UART bootloader"
+requires-python = ">=3.9"
+dependencies = [
+  "pyserial>=3.5",
+]
+
+[project.scripts]
+cp8000-uploader = "cp8000_uploader.cli:main"

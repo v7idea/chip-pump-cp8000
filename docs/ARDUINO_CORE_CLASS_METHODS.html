@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CP8000 Arduino Core Class / Method 介接清單</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8f3;
+      --panel: #ffffff;
+      --text: #1f2723;
+      --muted: #667067;
+      --line: #dfe4dc;
+      --head: #10251f;
+      --accent: #0f766e;
+      --ok: #137333;
+      --warn: #9a6700;
+      --todo: #8b1a1a;
+      --later: #4f5d75;
+      --code: #eef4ef;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      background: var(--head);
+      color: white;
+      padding: 32px 28px;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: clamp(26px, 4vw, 40px);
+      letter-spacing: 0;
+    }
+
+    header p {
+      max-width: 980px;
+      margin: 0;
+      color: #d6e2dc;
+      font-size: 16px;
+    }
+
+    main {
+      width: min(1240px, calc(100% - 32px));
+      margin: 24px auto 48px;
+    }
+
+    section {
+      margin: 0 0 24px;
+      padding: 22px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      color: var(--head);
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .metric {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcf8;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 28px;
+      color: var(--accent);
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 880px;
+      background: white;
+    }
+
+    th,
+    td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #eef3ed;
+      color: var(--head);
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: var(--code);
+      color: #17362f;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .badge {
+      display: inline-block;
+      min-width: 76px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--later);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .ok { background: var(--ok); }
+    .done { background: var(--ok); }
+    .compile { background: var(--accent); }
+    .todo { background: var(--todo); }
+    .partial { background: var(--warn); }
+    .later { background: var(--later); }
+
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .split-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .split-panel {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcf8;
+    }
+
+    .split-panel h3 {
+      margin: 0 0 8px;
+      color: var(--head);
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 8px;
+      border-radius: 6px;
+      background: var(--code);
+      color: #17362f;
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    ul {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 5px 0;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      header,
+      section {
+        break-inside: avoid;
+      }
+
+      th {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CP8000 Arduino Core Class / Method 介接清單</h1>
+    <p>
+      這份文件整理 Arduino Core 常用且基本需要接上的 class、function、method，
+      對應 CP8000 HAL bridge / vendor SDK 位置，以及目前驗證狀態。目標是作為
+      MVP、TODO、BLE 範例補齊與初版 Boards Manager 發行前的追蹤表。
+    </p>
+  </header>
+
+  <main>
+    <section>
+      <h2>狀態總覽</h2>
+      <p class="note">
+        狀態以目前專案進度與 ArduinoCore-avr 對照結果為準：Blink + Serial TX 已硬體驗證；
+        BLE 已接 vendor stack，手機可掃描 CP8000 並發現 Nordic UART Service；
+        APP 寫入後可收到 <code>hello(BLE)</code>，且 BLE RX 到 UART TX 已驗證；
+        Serial RX 已用 <code>SerialEcho</code> 驗證；BLESerialBridge
+        的 <code>{Payload}(BLE)</code> / <code>{Payload}(Serial)</code> 完整閉環已通；
+        <code>SerialAdvanced</code> 已完成 115200 baud 實機測試，
+        <code>peek</code>、<code>parseInt</code>、<code>parseFloat</code>、
+        <code>readBytesUntil</code>、<code>Print</code>、<code>Printable</code>、
+        固定 buffer <code>String</code> 均正常。
+      </p>
+      <div class="summary">
+        <div class="metric"><strong>Core</strong><span>Runtime、Wiring、Print、Stream、String、Serial、GPIO、Timing</span></div>
+        <div class="metric"><strong>Lib</strong><span>Wire、SPI、BLE、RF24G、Flash、Watchdog、Sleep</span></div>
+        <div class="metric"><strong>Parity</strong><span>以 ArduinoCore-avr 的 core / libraries 分層為基準</span></div>
+        <div class="metric"><strong>Gate</strong><span>Serial RX、BLE bridge close-loop、package install、upload</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>ArduinoCore-avr 參考結論</h2>
+      <p class="note">
+        官方 AVR core 的根目錄分成 <code>cores/arduino</code>、<code>libraries</code>、
+        <code>variants</code>、<code>boards.txt</code>、<code>platform.txt</code>。
+        <code>cores/arduino</code> 內包含語言基礎與所有 sketch 都會依賴的 class；
+        <code>libraries</code> 則包含使用時才拉入的周邊或功能庫。
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ArduinoCore-avr 位置</th>
+              <th>代表檔案 / library</th>
+              <th>對 CP8000 的設計意義</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>cores/arduino</code></td>
+              <td><code>Arduino.h</code>, <code>main.cpp</code>, <code>wiring.c</code>, <code>wiring_digital.c</code>, <code>wiring_analog.c</code>, <code>HardwareSerial.*</code>, <code>Print.*</code>, <code>Stream.*</code>, <code>WString.*</code>, <code>WMath.cpp</code>, <code>Tone.cpp</code></td>
+              <td>這些應視為 CP8000 core parity 的基礎，缺口應放入 MVP / TODO 追蹤。</td>
+            </tr>
+            <tr>
+              <td><code>libraries</code></td>
+              <td><code>Wire</code>, <code>SPI</code>, <code>EEPROM</code>, <code>SoftwareSerial</code>, <code>HID</code></td>
+              <td>CP8000 的 <code>Wire</code>、<code>SPI</code>、<code>CP8000BLE</code>、<code>CP8000RF24G</code> 也應維持 optional library，不放進 core 主路徑。</td>
+            </tr>
+            <tr>
+              <td><code>variants</code></td>
+              <td><code>pins_arduino.h</code>, board pin map</td>
+              <td>CP8001 / CP8003 / 後續封裝要靠 variant 管 pin alias、UART pins、LED pin，而不是硬寫在 library。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Core / Library 分層原則</h2>
+      <p class="note">
+        參考成熟 Arduino core 的做法，CP8000 SDK 應該讓 core 只負責所有 sketch 都必須有的最小能力。
+        其他周邊、協定棧、BLE/RF 這類會吃掉 flash/RAM 或 vendor binary lib 的功能，放在
+        <code>libraries/</code> 內，由 sketch 需要時透過 <code>#include</code> 才拉進編譯與連結。
+      </p>
+      <div class="split-grid">
+        <div class="split-panel">
+          <h3>放在 Arduino Core 內</h3>
+          <p class="note">每個 sketch 都需要，或 Arduino 語言本身要求存在的基礎層。</p>
+          <div class="tag-list">
+            <span class="tag">Arduino.h</span>
+            <span class="tag">main.cpp</span>
+            <span class="tag">wiring.c</span>
+            <span class="tag">Print</span>
+            <span class="tag">Stream base</span>
+            <span class="tag">Printable</span>
+            <span class="tag">String</span>
+            <span class="tag">WMath</span>
+            <span class="tag">HardwareSerial</span>
+            <span class="tag">pinMode</span>
+            <span class="tag">digitalWrite</span>
+            <span class="tag">digitalRead</span>
+            <span class="tag">analogRead</span>
+            <span class="tag">analogWrite</span>
+            <span class="tag">delay</span>
+            <span class="tag">millis</span>
+            <span class="tag">micros</span>
+            <span class="tag">tone</span>
+            <span class="tag">pulseIn</span>
+            <span class="tag">shiftIn</span>
+            <span class="tag">shiftOut</span>
+            <span class="tag">interrupts</span>
+          </div>
+        </div>
+        <div class="split-panel">
+          <h3>放在 Optional Libraries</h3>
+          <p class="note">只有使用者 include 時才需要，尤其要避免 BLE/RF stack 汙染 Blink 這種基本 sketch。</p>
+          <div class="tag-list">
+            <span class="tag">Wire</span>
+            <span class="tag">SPI</span>
+            <span class="tag">CP8000BLE</span>
+            <span class="tag">CP8000RF24G</span>
+            <span class="tag">CP8000Flash</span>
+            <span class="tag">CP8000Watchdog</span>
+            <span class="tag">CP8000Sleep</span>
+            <span class="tag">EEPROM-like Flash</span>
+            <span class="tag">SoftwareSerial</span>
+            <span class="tag">BLE GATT</span>
+            <span class="tag">BLE OTA</span>
+          </div>
+        </div>
+        <div class="split-panel">
+          <h3>介接規則</h3>
+          <ul>
+            <li>Core 不直接 include BLE/RF vendor headers。</li>
+            <li>大型 vendor stack 放在獨立 bridge 檔，讓 linker 只在被引用時拉入。</li>
+            <li>範例程式要清楚對應 library，例如 <code>BLEDeviceName</code> 必須 include <code>CP8000BLE.h</code>。</li>
+            <li>Blink、Serial、GPIO 類範例應保持小 flash / RAM footprint。</li>
+            <li>參考 AVR core，<code>String</code>、<code>Printable</code>、<code>WMath</code>、<code>pulseIn</code>、<code>shiftIn/shiftOut</code>、interrupt API 要列為 core parity。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Core Runtime / Wiring</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class / Surface</th>
+              <th>常用 Method</th>
+              <th>CP8000 介接點</th>
+              <th>Vendor SDK / 參考位置</th>
+              <th>狀態</th>
+              <th>測試計劃</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sketch runtime</td>
+              <td><code>setup()</code>, <code>loop()</code>, <code>main()</code></td>
+              <td><code>cores/cp8000/main.cpp</code></td>
+              <td><code>libstartlib.a</code>, linker scripts</td>
+              <td><span class="badge ok">已驗證</span></td>
+              <td>Blink + Serial print after reset</td>
+            </tr>
+            <tr>
+              <td>C++ runtime</td>
+              <td>global constructors, static objects</td>
+              <td><code>__libc_init_array()</code>, <code>.init_array</code></td>
+              <td><code>system/linker/cp800x_ble2g4_app.ld</code></td>
+              <td><span class="badge ok">已驗證</span></td>
+              <td><code>Serial.println()</code> 不 hang</td>
+            </tr>
+            <tr>
+              <td>Wiring</td>
+              <td><code>init()</code>, <code>yield()</code></td>
+              <td><code>wiring.c</code></td>
+              <td>Arduino-compatible shim</td>
+              <td><span class="badge compile">已編譯</span></td>
+              <td>所有 examples compile</td>
+            </tr>
+            <tr>
+              <td>Timing</td>
+              <td><code>delay()</code>, <code>delayMicroseconds()</code>, <code>millis()</code>, <code>micros()</code></td>
+              <td><code>cp8000_time_micros()</code> tick-based wait</td>
+              <td><code>driver_timer.*</code>, timer register <code>0x42000104</code></td>
+              <td><span class="badge ok">已驗證</span></td>
+              <td><code>CoreHelpers</code> loop uses <code>delay(2000)</code>; serial output interval is about 2.0s</td>
+            </tr>
+            <tr>
+              <td>Math helpers</td>
+              <td><code>map()</code>, <code>min()</code>, <code>max()</code>, <code>constrain()</code>, <code>radians()</code>, <code>degrees()</code>, <code>sq()</code></td>
+              <td><code>Arduino.h</code>, planned <code>WMath.cpp</code> parity</td>
+              <td>AVR core <code>WMath.cpp</code> and Arduino macro helpers</td>
+              <td><span class="badge ok">已硬體驗證</span></td>
+              <td><code>CoreHelpers</code>: <code>clipped=50</code>, <code>sq=81</code>, <code>degrees=90</code></td>
+            </tr>
+            <tr>
+              <td>Bit / byte helpers</td>
+              <td><code>bit()</code>, <code>bitRead()</code>, <code>bitSet()</code>, <code>bitClear()</code>, <code>lowByte()</code>, <code>highByte()</code>, <code>word()</code></td>
+              <td><code>Arduino.h</code></td>
+              <td>AVR core <code>Arduino.h</code></td>
+              <td><span class="badge ok">已硬體驗證</span></td>
+              <td><code>CoreHelpers</code>: <code>flags=0</code>, <code>word=4660</code>, <code>low=52</code>, <code>high=18</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>GPIO / Analog / PWM</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class / Surface</th>
+              <th>常用 Method</th>
+              <th>CP8000 介接點</th>
+              <th>Vendor SDK / 參考位置</th>
+              <th>狀態</th>
+              <th>測試計劃</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Digital IO</td>
+              <td><code>pinMode()</code>, <code>digitalWrite()</code>, <code>digitalRead()</code></td>
+              <td><code>cp8000_gpio_pin_mode()</code>, <code>cp8000_gpio_write()</code>, <code>cp8000_gpio_read()</code></td>
+              <td><code>components/driver/driver_gpio.*</code>, <code>app/peripheral_example/GPIO</code></td>
+              <td><span class="badge ok">已驗證</span></td>
+              <td>D0 LED、input pull-up、button / jumper</td>
+            </tr>
+            <tr>
+              <td>Analog input</td>
+              <td><code>analogRead()</code>, <code>analogReference()</code></td>
+              <td><code>cp8000_adc_read()</code></td>
+              <td><code>driver_gpadc.*</code>, <code>app/peripheral_example/ADC</code></td>
+              <td><span class="badge ok">已硬體驗證</span></td>
+              <td><code>AnalogReadSerial</code> on D6 reads about 2.9V while D2/D7 stay near 0V</td>
+            </tr>
+            <tr>
+              <td>PWM output</td>
+              <td><code>analogWrite()</code></td>
+              <td><code>cp8000_pwm_write()</code></td>
+              <td><code>driver_timer.*</code> PWM, <code>pwm_init()</code>, <code>pwm_duty_set()</code></td>
+              <td><span class="badge ok">已硬體驗證</span></td>
+              <td><code>Fade</code> on D0 LED shows breathing-light brightness control</td>
+            </tr>
+            <tr>
+              <td>Tone</td>
+              <td><code>tone()</code>, <code>noTone()</code></td>
+              <td><code>cp8000_tone_start()</code>, <code>cp8000_tone_stop()</code></td>
+              <td>Timer / LEDC driver</td>
+              <td><span class="badge partial">first-pass</span></td>
+              <td>蜂鳴器或示波器頻率驗證</td>
+            </tr>
+            <tr>
+              <td>Pulse timing</td>
+              <td><code>pulseIn()</code>, <code>pulseInLong()</code></td>
+              <td>planned timing + GPIO loop</td>
+              <td>AVR core <code>wiring_pulse.c</code>, CP8000 timer/GPIO</td>
+              <td><span class="badge todo">待補</span></td>
+              <td>PWM input / generated pulse measurement</td>
+            </tr>
+            <tr>
+              <td>Bit-banged shift</td>
+              <td><code>shiftIn()</code>, <code>shiftOut()</code></td>
+              <td>planned <code>wiring_shift.c</code> parity</td>
+              <td>AVR core <code>wiring_shift.c</code>, CP8000 GPIO</td>
+              <td><span class="badge todo">待補</span></td>
+              <td>74HC595 / loopback compatibility sketch</td>
+            </tr>
+            <tr>
+              <td>Interrupts</td>
+              <td><code>interrupts()</code>, <code>noInterrupts()</code>, <code>attachInterrupt()</code>, <code>detachInterrupt()</code></td>
+              <td>planned interrupt bridge</td>
+              <td>AVR core <code>WInterrupts.c</code>, CP8000 GPIO interrupt driver if available</td>
+              <td><span class="badge todo">待補</span></td>
+              <td>Button interrupt smoke test</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Serial / Stream / Print</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class / Surface</th>
+              <th>常用 Method</th>
+              <th>CP8000 介接點</th>
+              <th>Vendor SDK / 參考位置</th>
+              <th>狀態</th>
+              <th>測試計劃</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>Print</code></td>
+              <td><code>print()</code>, <code>println()</code>, <code>write()</code>, base selection, float printing, <code>Printable</code></td>
+              <td><code>Print.cpp</code>, <code>HardwareSerial::write()</code></td>
+              <td>C++ runtime + UART TX path</td>
+              <td><span class="badge done">hardware-validated</span></td>
+              <td><code>SerialAdvanced</code> + Blink serial output</td>
+            </tr>
+            <tr>
+              <td><code>Stream</code></td>
+              <td><code>available()</code>, <code>read()</code>, <code>peek()</code>, <code>flush()</code>, <code>readBytes()</code></td>
+              <td><code>Stream.cpp</code>, UART RX bridge</td>
+              <td><code>components/driver/driver_uart.*</code></td>
+              <td><span class="badge done">hardware-validated</span></td>
+              <td>USB TTL host TX -> CP8000 RX、SerialEcho RX、BLESerialBridge <code>(Serial)</code> echo</td>
+            </tr>
+            <tr>
+              <td><code>Stream</code> parsing</td>
+              <td><code>setTimeout()</code>, <code>find()</code>, <code>findUntil()</code>, <code>parseInt()</code>, <code>parseFloat()</code>, <code>readBytesUntil()</code>, <code>readString()</code>, <code>readStringUntil()</code></td>
+              <td><code>Stream.cpp</code> parity subset with first <code>WString</code> support</td>
+              <td>AVR core <code>Stream.h</code> / <code>Stream.cpp</code></td>
+              <td><span class="badge done">hardware-validated</span></td>
+              <td><code>SerialAdvanced</code>: <code>123 45.67 hello</code> returns parsed int/float/text/String output</td>
+            </tr>
+            <tr>
+              <td><code>String</code> / <code>Printable</code></td>
+              <td><code>String</code> constructors, concat, compare, conversion, <code>Printable::printTo()</code></td>
+              <td><code>Printable.h</code>; first fixed-buffer <code>WString.*</code> subset</td>
+              <td>AVR core <code>WString.*</code>, <code>Printable.h</code></td>
+              <td><span class="badge done">hardware-validated</span></td>
+              <td><code>Serial.println(label)</code> + fixed-buffer <code>String</code>; heap-backed String is deferred until CP8000 <code>_sbrk</code> is validated</td>
+            </tr>
+            <tr>
+              <td><code>HardwareSerial</code></td>
+              <td><code>begin()</code>, <code>begin(baud, config)</code>, <code>end()</code>, <code>operator bool()</code>, <code>availableForWrite()</code>, <code>peek()</code>, <code>read()</code>, <code>write()</code></td>
+              <td><code>cp8000_uart_begin()</code>, <code>cp8000_uart_write()</code>, <code>cp8000_uart_read()</code></td>
+              <td><code>driver_uart.*</code>, UART0 P8/P9 flashing pins</td>
+              <td><span class="badge done">hardware-validated TX/RX</span></td>
+              <td>115200 TX/RX、燒錄 pin 共用；SerialEcho + BLESerialBridge close-loop + SerialAdvanced parser test</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Wire / SPI</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class / Surface</th>
+              <th>常用 Method</th>
+              <th>CP8000 介接點</th>
+              <th>Vendor SDK / 參考位置</th>
+              <th>狀態</th>
+              <th>測試計劃</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>TwoWire</code> / <code>Wire</code></td>
+              <td><code>begin()</code>, <code>beginTransmission()</code>, <code>write()</code>, <code>endTransmission()</code>, <code>requestFrom()</code>, <code>read()</code></td>
+              <td><code>cp8000_i2c_begin()</code>, <code>cp8000_i2c_probe()</code>, <code>cp8000_i2c_write()</code></td>
+              <td><code>driver_iic.*</code>, <code>app/peripheral_example/IIC</code></td>
+              <td><span class="badge done">hardware-validated</span></td>
+              <td>Optional library；scanner + SH1106-compatible 128x64 OLED demo on SDA=D6/GPIO6, SCL=D7/GPIO7</td>
+            </tr>
+            <tr>
+              <td><code>SPIClass</code> / <code>SPI</code></td>
+              <td><code>begin()</code>, <code>beginTransaction()</code>, <code>transfer()</code>, <code>endTransaction()</code>, <code>end()</code></td>
+              <td><code>cp8000_spi_begin()</code>, <code>cp8000_spi_transfer()</code></td>
+              <td><code>driver_spim.*</code>, <code>app/peripheral_example/SPI_Master</code></td>
+              <td><span class="badge partial">compile-validated</span></td>
+              <td>Optional library；D2/MOSI to D3/MISO loopback、SPI flash / sensor transfer</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>CP8000 Utility Libraries</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class / Surface</th>
+              <th>常用 Method</th>
+              <th>CP8000 介接點</th>
+              <th>Vendor SDK / 參考位置</th>
+              <th>狀態</th>
+              <th>測試計劃</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>CP8000Flash</code></td>
+              <td><code>read()</code>, <code>write()</code>, <code>eraseSector()</code>, <code>uid()</code></td>
+              <td><code>cp8000_flash_*</code></td>
+              <td><code>driver_flash.*</code>, <code>app/peripheral_example/FLASH</code></td>
+              <td><span class="badge compile">已編譯</span></td>
+              <td>UID read、scratch sector policy</td>
+            </tr>
+            <tr>
+              <td><code>CP8000Watchdog</code></td>
+              <td><code>begin()</code>, <code>feed()</code>, <code>disable()</code></td>
+              <td><code>cp8000_wdt_*</code></td>
+              <td><code>driver_wdt.*</code>, <code>app/peripheral_example/WATCHDOG</code></td>
+              <td><span class="badge compile">已編譯</span></td>
+              <td>reset timeout measurement</td>
+            </tr>
+            <tr>
+              <td><code>CP8000Sleep</code></td>
+              <td><code>sleepMs()</code>, wakeup APIs</td>
+              <td><code>cp8000_sleep_ms()</code></td>
+              <td><code>api_sleep_wakeup.h</code>, <code>app/peripheral_example/SLEEP_WAKEUP</code></td>
+              <td><span class="badge partial">stub</span></td>
+              <td>睡眠電流、喚醒來源</td>
+            </tr>
+            <tr>
+              <td><code>CP8000RF24G</code></td>
+              <td><code>begin()</code>, <code>setChannel()</code>, <code>setPower()</code>, <code>send()</code>, <code>receive()</code></td>
+              <td><code>cp8000_rf24g_*</code></td>
+              <td><code>api_rf_2g4.h</code>, <code>app/ble_adv_example/rf_2g4_proprietary</code></td>
+              <td><span class="badge partial">first-pass</span></td>
+              <td>兩片板 TX/RX smoke test</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>BLE</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class / Surface</th>
+              <th>常用 Method</th>
+              <th>CP8000 介接點</th>
+              <th>Vendor SDK / 參考位置</th>
+              <th>狀態</th>
+              <th>測試計劃</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>CP8000BLE</code></td>
+              <td><code>begin()</code>, <code>poll()</code></td>
+              <td><code>libraries/CP8000BLE/src/cp8000_ble_bridge.c</code></td>
+              <td><code>app_ble_init()</code>, <code>ble_host_work_polling()</code></td>
+              <td><span class="badge compile">已編譯</span></td>
+              <td>Optional library；長時間 advertising 穩定性</td>
+            </tr>
+            <tr>
+              <td><code>CP8000BLE</code></td>
+              <td><code>advertise()</code>, <code>advertiseName()</code>, <code>advertiseManufacturerData()</code></td>
+              <td><code>libraries/CP8000BLE/src/cp8000_ble_bridge.c</code></td>
+              <td><code>ble_set_adv_data()</code>, <code>ble_adv_enable()</code>, <code>gap_def.h</code></td>
+              <td><span class="badge ok">已實機驗證</span></td>
+              <td>nRF Connect / LightBlue 掃描名稱、NUS service UUID 與 characteristic discovery</td>
+            </tr>
+            <tr>
+              <td>BLE connection wrapper</td>
+              <td><code>onConnect()</code>, <code>onDisconnect()</code>, <code>connected()</code></td>
+              <td><code>cp8000_ble_handle_connected()</code>, <code>cp8000_ble_handle_disconnected()</code></td>
+              <td><code>ble_event_callback()</code>, <code>conn.h</code>, <code>bt_conn_cb</code></td>
+              <td><span class="badge compile">已編譯</span></td>
+              <td><code>BLEConnectionStatus</code> 手機連線 / 斷線 callback 實測</td>
+            </tr>
+            <tr>
+              <td>BLE GATT peripheral</td>
+              <td><code>notify()</code>, <code>write()</code>, <code>setReadValue()</code>, <code>subscribed()</code>, <code>onWrite()</code>, <code>available()</code>, <code>read()</code></td>
+              <td><code>components/ble/service/ble_service.c</code>, <code>cp8000_ble_bridge.c</code>, <code>examples/BLESerialBridge</code></td>
+              <td><code>ble_user_service_add()</code>, <code>ble_service.c</code>, <code>gatt.h</code></td>
+              <td><span class="badge ok">已實機驗證</span></td>
+              <td>已驗證 <code>hello(BLE)</code>、<code>hello(Serial)</code> close-loop；<code>BLEUartEcho</code> 已收到手機寫入並經 Arduino API notify 回傳</td>
+            </tr>
+            <tr>
+              <td>BLE OTA</td>
+              <td>OTA service / image flow</td>
+              <td>planned strategy</td>
+              <td><code>ble_ota_service.*</code>, <code>cp800x_ble_ota.ld</code></td>
+              <td><span class="badge later">延後</span></td>
+              <td>OTA transfer + reboot validation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Boards Manager / Upload / Release Gate</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class / Surface</th>
+              <th>常用 Method</th>
+              <th>CP8000 介接點</th>
+              <th>Vendor SDK / 參考位置</th>
+              <th>狀態</th>
+              <th>測試計劃</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Uploader</td>
+              <td>Arduino upload recipe</td>
+              <td><code>cp8000-uploader</code>, <code>platform.txt</code></td>
+              <td>CP8xxx UART bootloader protocol</td>
+              <td><span class="badge ok">已驗證</span></td>
+              <td>Arduino CLI upload + serial monitor output</td>
+            </tr>
+            <tr>
+              <td>Package index</td>
+              <td><code>package_chip-pump_cp8000_index.json</code></td>
+              <td><code>scripts/package_*.sh</code>, CI workflow</td>
+              <td>Arduino package index specification</td>
+              <td><span class="badge partial">first-pass</span></td>
+              <td>乾淨 Arduino IDE Boards Manager install</td>
+            </tr>
+            <tr>
+              <td>macOS compile path</td>
+              <td>Docker Arduino CLI</td>
+              <td><code>docker-dev/compose.yaml</code>, <code>scripts/real_compile_examples.sh</code></td>
+              <td>XuanTie Linux x86_64 bare-metal toolchain</td>
+              <td><span class="badge ok">已驗證</span></td>
+              <td>macOS Docker real-toolchain compile all examples</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>建議處理順序</h2>
+      <ul>
+        <li>Serial RX 已通：<code>SerialEcho</code> 可收到 macOS USB TTL 傳入的 <code>serial_rx_probe</code> 並原樣回傳。</li>
+        <li>BLESerialBridge close-loop 已通：APP 寫入後可收到 <code>{Payload}(BLE)</code>，macOS serial echo 回板子後可再收到 <code>{Payload}(Serial)</code>。</li>
+        <li>BLE connection callback 與 NUS GATT API wrapper 已補；接著做 <code>BLEConnectionStatus</code> / <code>BLEUartEcho</code> 手機實測。</li>
+        <li>通用任意 UUID GATT builder 仍延後，等固定 NUS API 穩定後再切。</li>
+        <li>最後整理 Boards Manager package，做 macOS Docker compile、Arduino IDE install、upload 三段測試。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

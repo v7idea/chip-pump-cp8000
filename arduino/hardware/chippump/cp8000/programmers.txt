@@ -1,0 +1,9 @@
+uart.name=CP8000 UART Bootloader
+uart.communication=serial
+uart.protocol=cp8000-uart
+uart.program.tool=cp8000-uploader
+
+cklink.name=CK-Link via CDK
+cklink.communication=swd
+cklink.protocol=cklink
+cklink.program.tool=cp8000-uploader

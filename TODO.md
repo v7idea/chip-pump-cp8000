@@ -1,17 +1,16 @@
 # TODO
 
-## Repository Wrapper
+## Public Repository
 
-- [x] Add `Arduino-CP8000-Develop` as a git submodule.
-- [x] Point the submodule at the Azure DevOps SDK development repository.
-- [x] Document that the current submodule is private and requires DevOps access.
-- [x] Verify a clean clone with `git clone --recurse-submodules`.
-- [ ] Decide whether the public release path uses GitHub release artifacts or a
-      public SDK mirror.
+- [x] Remove private DevOps submodule dependency from the public repository.
+- [x] Sync first public-safe SDK file set from `Arduino-CP8000-Develop`.
+- [x] Document current vendor-file exclusions.
+- [ ] Verify a clean public clone without private credentials.
+- [ ] Confirm vendor SDK, static library, flash algorithm, and toolchain
+      redistribution terms.
 
 ## Release Packaging
 
-- [ ] Add GitHub Actions workflow to initialize the submodule.
 - [ ] Add GitHub Actions workflow to run SDK recipe smoke checks.
 - [ ] Add GitHub Actions workflow to generate package archive and
       `package_chip-pump_cp8000_index.json`.

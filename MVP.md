@@ -1,15 +1,15 @@
 # MVP
 
-The MVP for this wrapper repository is a reproducible release entry point for
-the CP8000 Arduino SDK.
+The MVP for this public repository is a reproducible release entry point for the
+CP8000 Arduino SDK.
 
 ## Required for Internal MVP
 
-- `Arduino-CP8000-Develop` is tracked as a git submodule.
-- The submodule points to a committed and pushed SDK revision in Azure DevOps.
-- A developer with DevOps access can clone this repository with submodules.
-- The wrapper README explains the private submodule limitation.
-- The SDK package and index generation can be run from the submodule.
+- This repository has no private submodule dependency.
+- A developer can clone this repository without Azure DevOps access.
+- Public-safe SDK files are synced from the private development repository.
+- The README explains which vendor files are intentionally excluded.
+- Package and index generation commands exist in this repository.
 
 ## Required for Public Arduino Boards Manager MVP
 
@@ -22,7 +22,7 @@ the CP8000 Arduino SDK.
 
 ## Not Yet MVP Complete
 
-This wrapper is not public-release complete while the only SDK source remote is a
-private DevOps repository. That is acceptable for internal development, but
-public Boards Manager testing must use public release artifacts or a public SDK
-mirror.
+This repository is not public-release complete until required vendor SDK source,
+static libraries, flash algorithm files, and toolchain distribution terms are
+confirmed. Public Boards Manager testing must use release artifacts that can be
+downloaded without private credentials.

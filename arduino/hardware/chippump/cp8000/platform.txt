@@ -1,0 +1,50 @@
+name=CHIP-PUMP CP8000 Boards
+version=0.1.0-dev
+
+compiler.path={runtime.platform.path}/tools/riscv64-unknown-elf/bin/
+compiler.c.cmd=riscv64-unknown-elf-gcc
+compiler.cxx.cmd=riscv64-unknown-elf-g++
+compiler.S.cmd=riscv64-unknown-elf-gcc
+compiler.ar.cmd=riscv64-unknown-elf-gcc-ar
+compiler.objcopy.cmd=riscv64-unknown-elf-objcopy
+compiler.objdump.cmd=riscv64-unknown-elf-objdump
+compiler.size.cmd=riscv64-unknown-elf-size
+
+compiler.warning_flags=-Wall -Wextra
+compiler.optimization_flags=-Os
+compiler.common_flags=-mcpu={build.mcu} -g -ffunction-sections -fdata-sections -flto -pipe {build.extra_flags} {build.log_flags} {build.vendor_ble_log_flags}
+compiler.c.flags={compiler.common_flags} -std=gnu11
+compiler.cpp.flags={compiler.common_flags} -std=gnu++11 -fno-exceptions -fno-rtti -fno-threadsafe-statics
+compiler.S.flags=-mcpu={build.mcu} -Wa,-gdwarf-2 -ffunction-sections -fdata-sections -pipe
+compiler.ar.flags=rcs
+compiler.ldflags=-mcpu={build.mcu} -nostartfiles -Wl,--gc-sections -Wl,--allow-multiple-definition -Wl,-L{runtime.platform.path}/system/linker -T{runtime.platform.path}/system/linker/{build.linker} --specs=nano.specs -flto -Wl,-Map,{build.path}/{build.project_name}.map
+compiler.sdk.includes=-I{runtime.platform.path}/system/sdk/components/ble/app -I{runtime.platform.path}/system/sdk/components/ble/ota_service -I{runtime.platform.path}/system/sdk/components/ble/service -I{runtime.platform.path}/system/sdk/components/driver -I{runtime.platform.path}/system/sdk/components/header -I{runtime.platform.path}/system/sdk/components/libraries -I{runtime.platform.path}/system/sdk/components/libraries/24g -I{runtime.platform.path}/system/sdk/components/libraries/ble -I{runtime.platform.path}/system/sdk/components/misc -I{runtime.platform.path}/system/sdk/modules/hal_clock -I{runtime.platform.path}/system/sdk/modules/hal_otp_rw
+
+build.extra_flags=-DBLE_FOTA_EN=0 -DBLE_MODE_SEL=2 -DBLE_SLEEP_EN=0
+build.log_flags=
+build.vendor_ble_log_flags=-DCP8000_VENDOR_BLE_LOG_ENABLED=0
+
+recipe.hooks.sketch.prebuild.1.pattern=
+
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" -c {compiler.c.flags} {compiler.warning_flags} -MMD -DF_CPU={build.f_cpu} -DARDUINO=10819 -DARDUINO_{build.board} -DARDUINO_ARCH_CP8000 "-I{build.core.path}" "-I{build.variant.path}" {compiler.sdk.includes} {includes} "{source_file}" -o "{object_file}"
+recipe.cpp.o.pattern="{compiler.path}{compiler.cxx.cmd}" -c {compiler.cpp.flags} {compiler.warning_flags} -MMD -DF_CPU={build.f_cpu} -DARDUINO=10819 -DARDUINO_{build.board} -DARDUINO_ARCH_CP8000 "-I{build.core.path}" "-I{build.variant.path}" {compiler.sdk.includes} {includes} "{source_file}" -o "{object_file}"
+recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" -c {compiler.S.flags} -MMD -DF_CPU={build.f_cpu} -DARDUINO=10819 -DARDUINO_{build.board} -DARDUINO_ARCH_CP8000 "-I{build.core.path}" "-I{build.variant.path}" {compiler.sdk.includes} {includes} "{source_file}" -o "{object_file}"
+
+recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{archive_file_path}" "{object_file}"
+
+recipe.c.combine.pattern="{compiler.path}{compiler.cxx.cmd}" -o "{build.path}/{build.project_name}.elf" -L{runtime.platform.path}/system/libs {object_files} -Wl,--start-group "{archive_file_path}" -lstartlib -lblebase -lblestack -l2g4_base -lrf2g4 -Wl,--end-group {compiler.ldflags}
+
+recipe.objcopy.eep.pattern=
+recipe.objcopy.hex.pattern="{compiler.path}{compiler.objcopy.cmd}" -O ihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+recipe.objcopy.bin.pattern="{compiler.path}{compiler.objcopy.cmd}" -O binary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+
+recipe.size.pattern="{compiler.path}{compiler.size.cmd}" -A "{build.path}/{build.project_name}.elf"
+recipe.size.regex=^(?:\.text|\.copy\.table|\.zero\.table|\.data)\s+([0-9]+).*
+recipe.size.regex.data=^(?:\.data|\.bss|\.heap|\.stack)\s+([0-9]+).*
+
+tools.cp8000-uploader.path={runtime.platform.path}/tools/cp8000-uploader
+tools.cp8000-uploader.cmd=cp8000-uploader
+tools.cp8000-uploader.cmd.windows=cp8000-uploader.exe
+tools.cp8000-uploader.upload.params.verbose=--verbose
+tools.cp8000-uploader.upload.params.quiet=
+tools.cp8000-uploader.upload.pattern="{path}/{cmd}" upload --protocol cp8xxx-binary --flash-write-mode cached --port "{serial.port}" --target "{upload.target}" --baud "{upload.speed}" --connect-timeout 60 --address "{build.flash_base}" --file "{build.path}/{build.project_name}.bin" {upload.verbose}

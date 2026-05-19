@@ -1,0 +1,14 @@
+services:
+  arduino-cli:
+    platform: ${CP8000_DOCKER_PLATFORM:-linux/amd64}
+    build:
+      context: .
+      args:
+        ARDUINO_CLI_VERSION: "1.2.2"
+    working_dir: /workspace
+    volumes:
+      - ..:/workspace
+    environment:
+      ARDUINO_DIRECTORIES_USER: /workspace/arduino
+      ARDUINO_DIRECTORIES_DATA: /workspace/.arduino15
+      CP8000_TOOLCHAIN_PATH: ${CP8000_TOOLCHAIN_PATH:-/opt/cp8000-toolchain}
