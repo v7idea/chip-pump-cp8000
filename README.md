@@ -136,7 +136,7 @@ Non-goals for the first MVP:
       `scripts/package_platform.sh <version>`.
 - [x] Generate package index with the final GitHub release asset URL and verify
       SHA-256 checksum and size.
-- [ ] Create a GitHub Release and upload the platform archive plus package
+- [x] Create a GitHub Release and upload the platform archive plus package
       index.
 - [x] Test Arduino CLI install using a clean data directory:
       `arduino-cli core update-index --additional-urls <index-url>`.
@@ -161,6 +161,8 @@ Current alpha artifact status:
   `2ae6c747dee84b4d1b1155aca61e295ef9d342af81e64296f08e4627d246a837`.
 - Local HTTP Boards Manager install test passed with a clean Arduino CLI data
   directory.
+- Public GitHub Release Boards Manager install test passed with a clean Arduino
+  CLI data directory after this repository was made public.
 - Installed-package Blink compile passed with
   `CP8000_TOOLCHAIN_PATH=/tmp/cp8000-xuantie-build/install`.
 
@@ -228,6 +230,11 @@ The final public URL should be usable in Arduino IDE:
 https://github.com/v7idea/chip-pump-cp8000/releases/latest/download/package_chip-pump_cp8000_index.json
 ```
 
-This URL is the intended direction. It should only be published after the
-release workflow uploads the package index and archive assets, and after a clean
-Arduino IDE install test passes.
+The current alpha URL is:
+
+```text
+https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.1/package_chip-pump_cp8000_index.json
+```
+
+This alpha URL has passed a clean Arduino CLI install and Blink compile test.
+Arduino IDE install and upload tests are still pending.
