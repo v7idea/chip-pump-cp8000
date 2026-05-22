@@ -17,6 +17,14 @@ from .protocol import (
 )
 
 
+def available_serial_ports() -> list[str]:
+    try:
+        from serial.tools import list_ports
+    except ImportError:
+        return []
+    return [port.device for port in list_ports.comports()]
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="cp8000-uploader",
@@ -183,6 +191,19 @@ def cmd_upload(args: argparse.Namespace) -> int:
     except TimeoutError as exc:
         print(f"cp8000-uploader: {exc}", file=sys.stderr)
         return 1
+    except Exception as exc:
+        if exc.__class__.__name__ == "SerialException":
+            print(f"cp8000-uploader: cannot open serial port {request.port}: {exc}", file=sys.stderr)
+            ports = available_serial_ports()
+            if ports:
+                print("available serial ports:", file=sys.stderr)
+                for port in ports:
+                    print(f"  {port}", file=sys.stderr)
+            else:
+                print("available serial ports: none", file=sys.stderr)
+            print("next step: reconnect the USB-to-TTL adapter and select the active /dev/cu.* port in Arduino IDE.", file=sys.stderr)
+            return 1
+        raise
 
     return 0
 
