@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-VERSION="${1:-0.1.0-alpha.2}"
+VERSION="${1:-0.1.0-alpha.3}"
 OUT_DIR="$ROOT/package/dist"
 STAGE="$ROOT/package/stage"
 ARCHIVE="$OUT_DIR/chippump-cp8000-$VERSION.tar.gz"
@@ -13,5 +13,5 @@ rm -rf "$STAGE"
 mkdir -p "$STAGE/chippump-cp8000-$VERSION" "$OUT_DIR"
 cp -R "$ROOT/arduino/hardware/chippump/cp8000/." "$STAGE/chippump-cp8000-$VERSION/"
 
-tar -C "$STAGE" -czf "$ARCHIVE" "chippump-cp8000-$VERSION"
+COPYFILE_DISABLE=1 tar -C "$STAGE" -czf "$ARCHIVE" "chippump-cp8000-$VERSION"
 echo "$ARCHIVE"

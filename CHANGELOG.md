@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0-alpha.3
+
+- Added `CP8000Examples` so Arduino IDE and Arduino CLI list the planned 20 CP8000 examples from Boards Manager installations.
+- Improved uploader diagnostics when Arduino IDE selects a stale or missing serial port.
+- Updated package generation to suppress macOS AppleDouble `._*` files in release archives.
+
 ## 0.1.0-dev
 
 - Created CP8000 Arduino platform scaffold.
