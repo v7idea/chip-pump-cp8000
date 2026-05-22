@@ -3,21 +3,21 @@
     {
       "name": "chippump",
       "maintainer": "CHIP-PUMP CP8000 Arduino SDK Team",
-      "websiteURL": "https://example.invalid/chippump/cp8000",
-      "email": "support@example.invalid",
+      "websiteURL": "https://github.com/v7idea/chip-pump-cp8000",
+      "email": "support@v7idea.com",
       "help": {
-        "online": "https://example.invalid/chippump/cp8000/help"
+        "online": "https://github.com/v7idea/chip-pump-cp8000/issues"
       },
       "platforms": [
         {
           "name": "CHIP-PUMP CP8000 Boards",
           "architecture": "cp8000",
-          "version": "0.1.0-dev",
+          "version": "0.1.0-alpha.1",
           "category": "Contributed",
-          "url": "https://example.invalid/chippump-cp8000-0.1.0-dev.tar.gz",
-          "archiveFileName": "chippump-cp8000-0.1.0-dev.tar.gz",
-          "checksum": "SHA-256:097154e74944bde8eb0118af3b7e5831ee55d9829f4d23f789380004e827b21c",
-          "size": "1839067",
+          "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.1/chippump-cp8000-0.1.0-alpha.1.tar.gz",
+          "archiveFileName": "chippump-cp8000-0.1.0-alpha.1.tar.gz",
+          "checksum": "SHA-256:2ae6c747dee84b4d1b1155aca61e295ef9d342af81e64296f08e4627d246a837",
+          "size": "1846900",
           "boards": [
             {
               "name": "CHIP-PUMP CP8001 SOP16"

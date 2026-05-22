@@ -15,14 +15,14 @@ def sha256(path: Path) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate Arduino Boards Manager package index.")
-    parser.add_argument("--version", default="0.1.0-dev")
+    parser.add_argument("--version", default="0.1.0-alpha.1")
     parser.add_argument("--archive", required=True, help="Path to platform archive")
     parser.add_argument("--url", required=True, help="Download URL for platform archive")
     parser.add_argument("--output", default="package/package_chip-pump_cp8000_index.json")
     parser.add_argument("--maintainer", default="CHIP-PUMP CP8000 Arduino SDK Team")
-    parser.add_argument("--website-url", default="https://example.invalid/chippump/cp8000")
-    parser.add_argument("--email", default="support@example.invalid")
-    parser.add_argument("--help-url", default="https://example.invalid/chippump/cp8000/help")
+    parser.add_argument("--website-url", default="https://github.com/v7idea/chip-pump-cp8000")
+    parser.add_argument("--email", default="support@v7idea.com")
+    parser.add_argument("--help-url", default="https://github.com/v7idea/chip-pump-cp8000/issues")
     args = parser.parse_args()
 
     archive = Path(args.archive)

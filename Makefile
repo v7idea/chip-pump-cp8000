@@ -1,9 +1,9 @@
-VERSION ?= 0.1.0-dev
+VERSION ?= 0.1.0-alpha.1
 FQBN ?= chippump:cp8000:cp8001_sop16
-PACKAGE_URL ?= https://example.invalid/chippump-cp8000-$(VERSION).tar.gz
-PACKAGE_WEBSITE_URL ?= https://example.invalid/chippump/cp8000
-PACKAGE_EMAIL ?= support@example.invalid
-PACKAGE_HELP_URL ?= https://example.invalid/chippump/cp8000/help
+PACKAGE_URL ?= https://github.com/v7idea/chip-pump-cp8000/releases/download/$(VERSION)/chippump-cp8000-$(VERSION).tar.gz
+PACKAGE_WEBSITE_URL ?= https://github.com/v7idea/chip-pump-cp8000
+PACKAGE_EMAIL ?= support@v7idea.com
+PACKAGE_HELP_URL ?= https://github.com/v7idea/chip-pump-cp8000/issues
 
 .PHONY: help docker-build smoke examples real-examples package index audit release-audit check-toolchain import-sdk
 

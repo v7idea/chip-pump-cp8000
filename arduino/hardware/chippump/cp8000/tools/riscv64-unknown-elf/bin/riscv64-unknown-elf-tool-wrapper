@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+TOOL_NAME="$(basename "$0")"
+REAL_TOOL_NAME="$TOOL_NAME"
+
+case "$TOOL_NAME" in
+  as)
+    REAL_TOOL_NAME="riscv64-unknown-elf-as"
+    ;;
+  ld)
+    REAL_TOOL_NAME="riscv64-unknown-elf-ld.bfd"
+    ;;
+esac
+
+if [[ "${CP8000_FAKE_TOOLCHAIN:-0}" == "1" ]]; then
+  out=""
+  args=("$@")
+
+  case "$TOOL_NAME" in
+    *-gcc|*-g++)
+      for ((i = 0; i < ${#args[@]}; i++)); do
+      if [[ "${args[$i]}" == "-o" && $((i + 1)) -lt ${#args[@]} ]]; then
+          out="${args[$((i + 1))]}"
+        fi
+      done
+      [[ -n "$out" ]] && { mkdir -p "$(dirname "$out")"; printf 'CP8000 fake compiler output\n' > "$out"; }
+      exit 0
+      ;;
+    *-ar)
+      for arg in "${args[@]}"; do
+        if [[ "$arg" == *.a ]]; then
+          out="$arg"
+          break
+        fi
+      done
+      [[ -n "$out" ]] && { mkdir -p "$(dirname "$out")"; printf 'CP8000 fake archive\n' > "$out"; }
+      exit 0
+      ;;
+    *-objcopy)
+      out="${args[-1]}"
+      mkdir -p "$(dirname "$out")"
+      printf 'CP8000 fake image\n' > "$out"
+      exit 0
+      ;;
+    *-objdump)
+      printf 'CP8000 fake objdump\n'
+      exit 0
+      ;;
+    *-size)
+      printf '.text 16 0\n.data 0 0\n.bss 0 0\n'
+      exit 0
+      ;;
+    *-readelf|*-nm|*-ranlib|*-strip)
+      exit 0
+      ;;
+  esac
+fi
+
+candidate_paths=()
+
+if [[ -n "${CP8000_TOOLCHAIN_PATH:-}" ]]; then
+  candidate_paths+=("$CP8000_TOOLCHAIN_PATH/bin/$REAL_TOOL_NAME")
+  candidate_paths+=("$CP8000_TOOLCHAIN_PATH/$REAL_TOOL_NAME")
+fi
+
+if [[ -n "${CDK_TOOLCHAIN_PATH:-}" ]]; then
+  candidate_paths+=("$CDK_TOOLCHAIN_PATH/bin/$REAL_TOOL_NAME")
+  candidate_paths+=("$CDK_TOOLCHAIN_PATH/$REAL_TOOL_NAME")
+fi
+
+candidate_paths+=("/opt/cp8000-toolchain/bin/$REAL_TOOL_NAME")
+candidate_paths+=("/opt/cp8000-toolchain/$REAL_TOOL_NAME")
+
+for candidate in "${candidate_paths[@]}"; do
+  if [[ -x "$candidate" && "$candidate" != "$0" ]]; then
+    export PATH="$(dirname "$0"):$(dirname "$candidate"):$PATH"
+    export COMPILER_PATH="$(dirname "$0"):$(dirname "$candidate"):${COMPILER_PATH:-}"
+    exec "$candidate" "$@"
+  fi
+done
+
+PATH_WITHOUT_THIS="$(python3 - "$0" <<'PY'
+import os
+import sys
+wrapper = os.path.realpath(sys.argv[1])
+wrapper_dir = os.path.dirname(wrapper)
+parts = [p for p in os.environ.get("PATH", "").split(os.pathsep) if os.path.realpath(p or ".") != wrapper_dir]
+print(os.pathsep.join(parts))
+PY
+)"
+
+if real_tool="$(PATH="$PATH_WITHOUT_THIS" command -v "$REAL_TOOL_NAME" 2>/dev/null)"; then
+  exec "$real_tool" "$@"
+fi
+
+cat >&2 <<EOF
+error: $TOOL_NAME not found.
+
+Install or mount the C-Sky/CDK RISC-V E902M toolchain, then use one of:
+
+  export CP8000_TOOLCHAIN_PATH=/path/to/XTGccElfNewlib/V3.2.0/R
+  export CDK_TOOLCHAIN_PATH=/path/to/XTGccElfNewlib/V3.2.0/R
+
+Or symlink/copy the real binaries into:
+
+  arduino/hardware/chippump/cp8000/tools/riscv64-unknown-elf/bin/
+
+See README.md for Boards Manager release and toolchain setup notes.
+EOF
+
+exit 127

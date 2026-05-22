@@ -83,8 +83,8 @@ compile, and upload without Azure DevOps access.
 MVP definition:
 
 - A GitHub Release publishes `package_chip-pump_cp8000_index.json`.
-- The package index uses real GitHub release asset URLs, not
-  `example.invalid`.
+- The package index uses real GitHub release asset URLs instead of placeholder
+  URLs.
 - The platform archive downloads publicly and extracts into a valid Arduino
   platform containing `boards.txt`, `platform.txt`, `programmers.txt`, `cores`,
   `variants`, `libraries`, `tools`, `system/linker`, and any redistributable
@@ -109,13 +109,13 @@ Non-goals for the first MVP:
 
 ## Boards Manager TODO
 
-- [ ] Replace `example.invalid` metadata in
+- [x] Replace placeholder metadata in
       `package/package_chip-pump_cp8000_index.json` and
       `scripts/generate_package_index.py`.
-- [ ] Choose package metadata:
+- [x] Choose package metadata:
       `name=chippump`, platform architecture `cp8000`, maintainer name,
       support email, website URL, and help URL.
-- [ ] Decide release version format. Use Arduino-compatible semver such as
+- [x] Decide release version format. Use Arduino-compatible semver such as
       `0.1.0-alpha.1`, then keep `platform.txt`, archive name, GitHub tag, and
       package index version aligned.
 - [ ] Confirm redistribution rights for vendor SDK source, static libraries,
@@ -132,13 +132,13 @@ Non-goals for the first MVP:
 - [ ] Ensure `tools/cp8000-uploader` packages binaries for macOS, Linux, and
       Windows, or provide a portable Python/package strategy accepted by
       Arduino CLI.
-- [ ] Run package generation:
+- [x] Run package generation:
       `scripts/package_platform.sh <version>`.
-- [ ] Generate package index with the final GitHub release asset URL and verify
+- [x] Generate package index with the final GitHub release asset URL and verify
       SHA-256 checksum and size.
 - [ ] Create a GitHub Release and upload the platform archive plus package
       index.
-- [ ] Test Arduino CLI install using a clean data directory:
+- [x] Test Arduino CLI install using a clean data directory:
       `arduino-cli core update-index --additional-urls <index-url>`.
 - [ ] Test Arduino IDE install using Additional Boards Manager URLs.
 - [ ] Compile installed examples: Blink, CoreHelpers, SerialEcho,
@@ -151,6 +151,18 @@ Non-goals for the first MVP:
       release assets, and run recipe smoke checks.
 - [ ] Add a release checklist that blocks public announcement until install,
       compile, upload, and hardware smoke tests pass.
+
+Current alpha artifact status:
+
+- Version: `0.1.0-alpha.1`.
+- Generated archive: `package/dist/chippump-cp8000-0.1.0-alpha.1.tar.gz`.
+- Generated package index: `package/package_chip-pump_cp8000_index.json`.
+- Archive SHA-256:
+  `2ae6c747dee84b4d1b1155aca61e295ef9d342af81e64296f08e4627d246a837`.
+- Local HTTP Boards Manager install test passed with a clean Arduino CLI data
+  directory.
+- Installed-package Blink compile passed with
+  `CP8000_TOOLCHAIN_PATH=/tmp/cp8000-xuantie-build/install`.
 
 ## Required Arduino Settings
 
