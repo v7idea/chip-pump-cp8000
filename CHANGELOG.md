@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0-alpha.7
+## 0.1.0-alpha.8
 
 - Switched the CP8000 compiler recipe to the Boards Manager managed
   `cp8000-xuantie-elf-newlib` tool path.

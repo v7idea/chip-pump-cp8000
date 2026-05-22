@@ -7,7 +7,7 @@ Arduino Boards Manager package for CHIP-PUMP CP8000/CP800X boards.
 Use the versioned package index URL:
 
 ```text
-https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.7/package_chip-pump_cp8000_index.json
+https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.8/package_chip-pump_cp8000_index.json
 ```
 
 The package index keeps previously published alpha platform versions in the
@@ -15,7 +15,7 @@ same `platforms` array, newest first.
 
 ## Current Package
 
-`0.1.0-alpha.7` includes:
+`0.1.0-alpha.8` includes:
 
 - CP8000 Arduino core and board definitions for CP8001 SOP16 and CP8003 SOP16.
 - Board-scoped example categories:
@@ -27,7 +27,7 @@ same `platforms` array, newest first.
 
 ## Toolchain Packages
 
-Starting with `0.1.0-alpha.7`, Arduino IDE / Arduino CLI downloads the
+Starting with `0.1.0-alpha.8`, Arduino IDE / Arduino CLI downloads the
 `cp8000-xuantie-elf-newlib` tool automatically through `toolsDependencies`.
 
 Packaged hosts:
@@ -44,10 +44,10 @@ redistributable Windows XuanTie ELF/Newlib compiler bundle containing
 
 ```bash
 arduino-cli core update-index \
-  --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.7/package_chip-pump_cp8000_index.json
+  --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.8/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.0-alpha.7 \
-  --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.7/package_chip-pump_cp8000_index.json
+arduino-cli core install chippump:cp8000@0.1.0-alpha.8 \
+  --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.8/package_chip-pump_cp8000_index.json
 ```
 
 Compile Blink:
@@ -70,10 +70,10 @@ make index
 Release assets expected by Boards Manager:
 
 - `package_chip-pump_cp8000_index.json`
-- `chippump-cp8000-0.1.0-alpha.7.tar.gz`
-- `cp8000-xuantie-elf-newlib-0.1.0-alpha.7-x86_64-linux-gnu.tar.gz`
-- `cp8000-xuantie-elf-newlib-0.1.0-alpha.7-i686-linux-gnu.tar.gz`
-- `cp8000-xuantie-elf-newlib-0.1.0-alpha.7-arm64-apple-darwin.tar.gz`
+- `chippump-cp8000-0.1.0-alpha.8.tar.gz`
+- `cp8000-xuantie-elf-newlib-0.1.0-alpha.8-x86_64-linux-gnu.tar.gz`
+- `cp8000-xuantie-elf-newlib-0.1.0-alpha.8-i686-linux-gnu.tar.gz`
+- `cp8000-xuantie-elf-newlib-0.1.0-alpha.8-arm64-apple-darwin.tar.gz`
 
 ## Notes
 
