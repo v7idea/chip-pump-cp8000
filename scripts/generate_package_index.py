@@ -13,6 +13,28 @@ def sha256(path: Path) -> str:
     return "SHA-256:" + digest.hexdigest()
 
 
+def platform_entry(version: str, archive_name: str, url: str, checksum: str, size: str) -> dict:
+    return {
+        "name": "CHIP-PUMP CP8000 Boards",
+        "architecture": "cp8000",
+        "version": version,
+        "category": "Contributed",
+        "url": url,
+        "archiveFileName": archive_name,
+        "checksum": checksum,
+        "size": size,
+        "boards": [
+            {"name": "CHIP-PUMP CP8001 SOP16"},
+            {"name": "CHIP-PUMP CP8003 SOP16"},
+        ],
+        "toolsDependencies": [],
+    }
+
+
+def version_key(version: str) -> tuple:
+    return tuple(int(part) if part.isdigit() else part for part in version.replace("-", ".").split("."))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate Arduino Boards Manager package index.")
     parser.add_argument("--version", default="0.1.0-alpha.6")
@@ -23,11 +45,42 @@ def main() -> int:
     parser.add_argument("--website-url", default="https://github.com/v7idea/chip-pump-cp8000")
     parser.add_argument("--email", default="support@v7idea.com")
     parser.add_argument("--help-url", default="https://github.com/v7idea/chip-pump-cp8000/issues")
+    parser.add_argument(
+        "--previous-platforms",
+        default="package/platform_releases.json",
+        help="JSON array of previous platform release metadata to keep in the package index",
+    )
     args = parser.parse_args()
 
     archive = Path(args.archive)
     if not archive.is_file():
         raise SystemExit(f"archive not found: {archive}")
+
+    platforms = []
+    previous_platforms = Path(args.previous_platforms)
+    if previous_platforms.is_file():
+        previous = json.loads(previous_platforms.read_text(encoding="utf-8"))
+        for entry in previous:
+            platforms.append(
+                platform_entry(
+                    entry["version"],
+                    entry["archiveFileName"],
+                    entry["url"],
+                    entry["checksum"],
+                    entry["size"],
+                )
+            )
+
+    current = platform_entry(
+        args.version,
+        archive.name,
+        args.url,
+        sha256(archive),
+        str(archive.stat().st_size),
+    )
+    platforms = [entry for entry in platforms if entry["version"] != args.version]
+    platforms.append(current)
+    platforms.sort(key=lambda item: version_key(item["version"]), reverse=True)
 
     package = {
         "packages": [
@@ -37,23 +90,7 @@ def main() -> int:
                 "websiteURL": args.website_url,
                 "email": args.email,
                 "help": {"online": args.help_url},
-                "platforms": [
-                    {
-                        "name": "CHIP-PUMP CP8000 Boards",
-                        "architecture": "cp8000",
-                        "version": args.version,
-                        "category": "Contributed",
-                        "url": args.url,
-                        "archiveFileName": archive.name,
-                        "checksum": sha256(archive),
-                        "size": str(archive.stat().st_size),
-                        "boards": [
-                            {"name": "CHIP-PUMP CP8001 SOP16"},
-                            {"name": "CHIP-PUMP CP8003 SOP16"},
-                        ],
-                        "toolsDependencies": [],
-                    }
-                ],
+                "platforms": platforms,
                 "tools": [],
             }
         ]

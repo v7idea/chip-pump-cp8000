@@ -71,6 +71,21 @@ make index
 The package commands are expected to become release-ready after the vendor file
 redistribution decision is resolved.
 
+## Boards Manager Package Index
+
+`package/package_chip-pump_cp8000_index.json` is generated as one combined
+Arduino Boards Manager index. It keeps all published alpha platform versions in
+the same `platforms` array, newest first, so Arduino IDE can show or install
+older package versions from one public Additional Boards Manager URL.
+
+The package archive includes the CP8000 Arduino core, examples, vendor SDK
+source/static runtime libraries, uploader scripts, flash/linker assets, and
+`tools/riscv64-unknown-elf` wrapper executables. It does not currently include
+host-native XuanTie compiler binaries for Linux x86_64, Linux i386/x86, macOS,
+or Windows, and `toolsDependencies` is still empty. Users still need a local
+toolchain through `~/.cp8000/toolchain`, `CP8000_TOOLCHAIN_PATH`, or the Docker
+developer path until redistribution and hosted tool packages are resolved.
+
 For real native macOS ARM compiler probing:
 
 ```bash
