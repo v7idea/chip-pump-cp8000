@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.6
+
+- Replaced the empty platform-level `examples/` layout with seven categorized
+  board-scoped example libraries: `01.GPIO`, `02.I2C_SPI`, `03.BLE`,
+  `04.Serial`, `05.24GRadio`, `06.Watchdog`, and `07.OTA`.
+- This layout makes the categories appear directly under
+  `Examples for CHIP-PUMP CP8001 SOP16` in Arduino IDE.
+
 ## 0.1.0-alpha.5
 
 - Moved the categorized 20 CP8000 sketches from the `CP8000Examples`
