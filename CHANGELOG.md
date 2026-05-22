@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0-alpha.4
+
+- Grouped the 20 `CP8000Examples` sketches into Arduino IDE categories:
+  `01.GPIO`, `02.I2C_SPI`, `03.BLE`, `04.Serial`, `05.24GRadio`,
+  `06.Watchdog`, and `07.OTA`.
+
 ## 0.1.0-alpha.3
 
 - Added `CP8000Examples` so Arduino IDE and Arduino CLI list the planned 20 CP8000 examples from Boards Manager installations.

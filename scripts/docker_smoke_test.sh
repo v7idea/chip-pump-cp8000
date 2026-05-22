@@ -4,11 +4,11 @@ set -euo pipefail
 arduino-cli core list --config-file /workspace/arduino-cli.yaml
 arduino-cli board listall --config-file /workspace/arduino-cli.yaml | grep -E 'CP8001|CP8003'
 
-ARCHIVE="$(scripts/package_platform.sh 0.1.0-alpha.3)"
+ARCHIVE="$(scripts/package_platform.sh 0.1.0-alpha.4)"
 python3 scripts/generate_package_index.py \
-  --version 0.1.0-alpha.3 \
+  --version 0.1.0-alpha.4 \
   --archive "$ARCHIVE" \
-  --url https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.3/chippump-cp8000-0.1.0-alpha.3.tar.gz
+  --url https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.4/chippump-cp8000-0.1.0-alpha.4.tar.gz
 
 python3 -m json.tool package/package_chip-pump_cp8000_index.json >/dev/null
 PYTHONPATH=tools/cp8000-uploader python3 -m cp8000_uploader --version
