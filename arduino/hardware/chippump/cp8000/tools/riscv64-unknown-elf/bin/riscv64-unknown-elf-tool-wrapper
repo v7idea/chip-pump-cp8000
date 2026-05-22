@@ -69,6 +69,10 @@ if [[ -n "${CDK_TOOLCHAIN_PATH:-}" ]]; then
   candidate_paths+=("$CDK_TOOLCHAIN_PATH/$REAL_TOOL_NAME")
 fi
 
+candidate_paths+=("$HOME/.cp8000/toolchain/bin/$REAL_TOOL_NAME")
+candidate_paths+=("$HOME/.cp8000/toolchain/$REAL_TOOL_NAME")
+candidate_paths+=("/tmp/cp8000-xuantie-build/install/bin/$REAL_TOOL_NAME")
+candidate_paths+=("/tmp/cp8000-xuantie-build/install/$REAL_TOOL_NAME")
 candidate_paths+=("/opt/cp8000-toolchain/bin/$REAL_TOOL_NAME")
 candidate_paths+=("/opt/cp8000-toolchain/$REAL_TOOL_NAME")
 
