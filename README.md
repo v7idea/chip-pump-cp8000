@@ -4,14 +4,23 @@ Arduino Boards Manager package for CHIP-PUMP CP8000/CP800X boards.
 
 ## Boards Manager URL
 
-Use the versioned package index URL:
+Use this fixed public Boards Manager URL:
+
+```text
+https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
+```
+
+This URL is intentionally stable. It points to the `boards-manager` GitHub
+Release, whose `package_chip-pump_cp8000_index.json` asset should be replaced
+whenever a new CP8000 package version is published. The package index itself
+keeps previously published alpha platform versions in the same `platforms`
+array, newest first.
+
+The latest versioned index is also available from the release that produced it:
 
 ```text
 https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.9/package_chip-pump_cp8000_index.json
 ```
-
-The package index keeps previously published alpha platform versions in the
-same `platforms` array, newest first.
 
 ## Current Package
 
@@ -44,10 +53,10 @@ The Windows package is a PE32 i386 executable bundle, so the Arduino host is
 
 ```bash
 arduino-cli core update-index \
-  --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.9/package_chip-pump_cp8000_index.json
+  --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
 arduino-cli core install chippump:cp8000@0.1.0-alpha.9 \
-  --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.9/package_chip-pump_cp8000_index.json
+  --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
 Compile Blink:
@@ -75,6 +84,13 @@ Release assets expected by Boards Manager:
 - `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-i686-linux-gnu.tar.gz`
 - `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-arm64-apple-darwin.tar.gz`
 - `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-i686-mingw32.tar.gz`
+
+After publishing a versioned release, update the stable Boards Manager release:
+
+```bash
+gh release upload boards-manager package/package_chip-pump_cp8000_index.json \
+  --repo v7idea/chip-pump-cp8000 --clobber
+```
 
 ## Notes
 
