@@ -13,7 +13,14 @@ def sha256(path: Path) -> str:
     return "SHA-256:" + digest.hexdigest()
 
 
-def platform_entry(version: str, archive_name: str, url: str, checksum: str, size: str) -> dict:
+def platform_entry(
+    version: str,
+    archive_name: str,
+    url: str,
+    checksum: str,
+    size: str,
+    tools_dependencies: list[dict] | None = None,
+) -> dict:
     return {
         "name": "CHIP-PUMP CP8000 Boards",
         "architecture": "cp8000",
@@ -27,7 +34,7 @@ def platform_entry(version: str, archive_name: str, url: str, checksum: str, siz
             {"name": "CHIP-PUMP CP8001 SOP16"},
             {"name": "CHIP-PUMP CP8003 SOP16"},
         ],
-        "toolsDependencies": [],
+        "toolsDependencies": tools_dependencies or [],
     }
 
 
@@ -37,7 +44,7 @@ def version_key(version: str) -> tuple:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate Arduino Boards Manager package index.")
-    parser.add_argument("--version", default="0.1.0-alpha.6")
+    parser.add_argument("--version", default="0.1.0-alpha.7")
     parser.add_argument("--archive", required=True, help="Path to platform archive")
     parser.add_argument("--url", required=True, help="Download URL for platform archive")
     parser.add_argument("--output", default="package/package_chip-pump_cp8000_index.json")
@@ -49,6 +56,11 @@ def main() -> int:
         "--previous-platforms",
         default="package/platform_releases.json",
         help="JSON array of previous platform release metadata to keep in the package index",
+    )
+    parser.add_argument(
+        "--tool-releases",
+        default="package/tool_releases.json",
+        help="JSON array of Arduino tool release metadata to include in the package index",
     )
     args = parser.parse_args()
 
@@ -68,7 +80,22 @@ def main() -> int:
                     entry["url"],
                     entry["checksum"],
                     entry["size"],
+                    entry.get("toolsDependencies", []),
                 )
+            )
+
+    tools = []
+    current_tools_dependencies = []
+    tool_releases = Path(args.tool_releases)
+    if tool_releases.is_file():
+        tools = json.loads(tool_releases.read_text(encoding="utf-8"))
+        for tool in tools:
+            current_tools_dependencies.append(
+                {
+                    "packager": "chippump",
+                    "name": tool["name"],
+                    "version": tool["version"],
+                }
             )
 
     current = platform_entry(
@@ -77,6 +104,7 @@ def main() -> int:
         args.url,
         sha256(archive),
         str(archive.stat().st_size),
+        current_tools_dependencies,
     )
     platforms = [entry for entry in platforms if entry["version"] != args.version]
     platforms.append(current)
@@ -91,7 +119,7 @@ def main() -> int:
                 "email": args.email,
                 "help": {"online": args.help_url},
                 "platforms": platforms,
-                "tools": [],
+                "tools": tools,
             }
         ]
     }

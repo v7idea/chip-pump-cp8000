@@ -1,11 +1,11 @@
-VERSION ?= 0.1.0-alpha.6
+VERSION ?= 0.1.0-alpha.7
 FQBN ?= chippump:cp8000:cp8001_sop16
 PACKAGE_URL ?= https://github.com/v7idea/chip-pump-cp8000/releases/download/$(VERSION)/chippump-cp8000-$(VERSION).tar.gz
 PACKAGE_WEBSITE_URL ?= https://github.com/v7idea/chip-pump-cp8000
 PACKAGE_EMAIL ?= support@v7idea.com
 PACKAGE_HELP_URL ?= https://github.com/v7idea/chip-pump-cp8000/issues
 
-.PHONY: help docker-build smoke examples real-examples package index audit release-audit check-toolchain import-sdk
+.PHONY: help docker-build smoke examples real-examples package package-tools index audit release-audit check-toolchain import-sdk
 
 help:
 	@printf '%s\n' \
@@ -15,6 +15,7 @@ help:
 		'  examples         Run fake-toolchain compile recipe for all examples' \
 		'  real-examples    Run real toolchain compile for all examples' \
 		'  package          Create package/dist/chippump-cp8000-$(VERSION).tar.gz' \
+		'  package-tools    Create hosted Boards Manager toolchain archives' \
 		'  index            Generate package/package_chip-pump_cp8000_index.json' \
 		'  audit            Check release placeholders and known blockers' \
 		'  release-audit    Check release placeholders as fatal' \
@@ -35,6 +36,9 @@ real-examples:
 
 package:
 	scripts/package_platform.sh $(VERSION)
+
+package-tools:
+	scripts/package_toolchains.sh $(VERSION)
 
 index: package
 	python3 scripts/generate_package_index.py --version $(VERSION) --archive package/dist/chippump-cp8000-$(VERSION).tar.gz --url $(PACKAGE_URL) --website-url $(PACKAGE_WEBSITE_URL) --email $(PACKAGE_EMAIL) --help-url $(PACKAGE_HELP_URL)

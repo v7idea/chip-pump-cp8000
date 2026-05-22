@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.0-alpha.7
+
+- Switched the CP8000 compiler recipe to the Boards Manager managed
+  `cp8000-xuantie-elf-newlib` tool path.
+- Added package-index generation for hosted compiler `tools` and
+  `toolsDependencies`.
+- Added toolchain archive packaging for Linux x86_64, Linux i386, and macOS
+  ARM64. Windows remains pending until a redistributable XuanTie Windows
+  compiler bundle is available.
+
 ## 0.1.0-alpha.6
 
 - Replaced the empty platform-level `examples/` layout with seven categorized
