@@ -5,6 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VERSION="${1:-0.1.0-alpha.7}"
 TAG="${2:-$VERSION}"
 OUT_DIR="$ROOT/package/dist"
+STAGE_DIR="$ROOT/package/tool-stage"
 META="$ROOT/package/tool_releases.json"
 BASE_URL="https://github.com/v7idea/chip-pump-cp8000/releases/download/$TAG"
 TOOL_NAME="cp8000-xuantie-elf-newlib"
@@ -22,6 +23,7 @@ package_one() {
   local host="$1"
   local source_dir="$2"
   local archive="$OUT_DIR/$TOOL_NAME-$VERSION-$host.tar.gz"
+  local root_dir="$TOOL_NAME-$VERSION-$host"
 
   if [ ! -x "$source_dir/bin/riscv64-unknown-elf-gcc" ] && [ ! -x "$source_dir/bin/riscv64-unknown-elf-gcc.exe" ]; then
     printf 'skip %s: missing compiler at %s/bin/riscv64-unknown-elf-gcc\n' "$host" "$source_dir" >&2
@@ -29,7 +31,10 @@ package_one() {
   fi
 
   printf 'packaging %s from %s\n' "$host" "$source_dir" >&2
-  COPYFILE_DISABLE=1 tar -C "$source_dir" -czf "$archive" .
+  rm -rf "$STAGE_DIR/$root_dir"
+  mkdir -p "$STAGE_DIR/$root_dir"
+  rsync -a --delete --exclude '.DS_Store' "$source_dir/" "$STAGE_DIR/$root_dir/"
+  COPYFILE_DISABLE=1 tar -C "$STAGE_DIR" -czf "$archive" "$root_dir"
 
   local checksum
   checksum="$(shasum -a 256 "$archive" | awk '{print "SHA-256:" $1}')"
