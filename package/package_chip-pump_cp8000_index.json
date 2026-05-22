@@ -12,12 +12,12 @@
         {
           "name": "CHIP-PUMP CP8000 Boards",
           "architecture": "cp8000",
-          "version": "0.1.0-alpha.4",
+          "version": "0.1.0-alpha.5",
           "category": "Contributed",
-          "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.4/chippump-cp8000-0.1.0-alpha.4.tar.gz",
-          "archiveFileName": "chippump-cp8000-0.1.0-alpha.4.tar.gz",
-          "checksum": "SHA-256:bc5226d868a46bae3896e0b86622d842dcf801770c598837f36a1ce3bea24a7e",
-          "size": "1846684",
+          "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.5/chippump-cp8000-0.1.0-alpha.5.tar.gz",
+          "archiveFileName": "chippump-cp8000-0.1.0-alpha.5.tar.gz",
+          "checksum": "SHA-256:1bbf6e40b8b8110d88588edaab79fad63d7b782c4751e16a3ffd48367ff45781",
+          "size": "1845566",
           "boards": [
             {
               "name": "CHIP-PUMP CP8001 SOP16"

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.5
+
+- Moved the categorized 20 CP8000 sketches from the `CP8000Examples`
+  pseudo-library into the platform-level `examples/` menu so Arduino IDE shows
+  `01.GPIO`, `02.I2C_SPI`, `03.BLE`, `04.Serial`, `05.24GRadio`,
+  `06.Watchdog`, and `07.OTA` directly under the CP8000 board examples.
+- Removed the `CP8000Examples` pseudo-library from the package.
+
 ## 0.1.0-alpha.4
 
 - Grouped the 20 `CP8000Examples` sketches into Arduino IDE categories:
