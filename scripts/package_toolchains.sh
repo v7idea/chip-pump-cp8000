@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-VERSION="${1:-0.1.0-alpha.8}"
+VERSION="${1:-0.1.0-alpha.9}"
 TAG="${2:-$VERSION}"
 OUT_DIR="$ROOT/package/dist"
 STAGE_DIR="$ROOT/package/tool-stage"
@@ -13,7 +13,7 @@ TOOL_NAME="cp8000-xuantie-elf-newlib"
 LINUX_X86_64_TOOLCHAIN="${LINUX_X86_64_TOOLCHAIN:-$ROOT/../SDK/Xuantie-900-gcc-elf-newlib-x86_64-V3.4.0}"
 LINUX_I386_TOOLCHAIN="${LINUX_I386_TOOLCHAIN:-$ROOT/../SDK/Xuantie-900-gcc-elf-newlib-i386-V3.4.0}"
 MACOS_ARM64_TOOLCHAIN="${MACOS_ARM64_TOOLCHAIN:-/tmp/cp8000-xuantie-build/install}"
-WINDOWS_X86_64_TOOLCHAIN="${WINDOWS_X86_64_TOOLCHAIN:-}"
+WINDOWS_I686_TOOLCHAIN="${WINDOWS_I686_TOOLCHAIN:-$ROOT/../SDK/Xuantie-900-gcc-elf-newlib-mingw-V3.4.0}"
 
 mkdir -p "$OUT_DIR"
 
@@ -58,8 +58,8 @@ PY
 package_one "x86_64-linux-gnu" "$LINUX_X86_64_TOOLCHAIN"
 package_one "i686-linux-gnu" "$LINUX_I386_TOOLCHAIN"
 package_one "arm64-apple-darwin" "$MACOS_ARM64_TOOLCHAIN"
-if [ -n "$WINDOWS_X86_64_TOOLCHAIN" ]; then
-  package_one "x86_64-mingw32" "$WINDOWS_X86_64_TOOLCHAIN"
+if [ -n "$WINDOWS_I686_TOOLCHAIN" ]; then
+  package_one "i686-mingw32" "$WINDOWS_I686_TOOLCHAIN"
 fi
 
 python3 - "$META" "$TOOL_NAME" "$VERSION" "${systems_json[@]}" <<'PY'

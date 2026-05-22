@@ -44,7 +44,7 @@ def version_key(version: str) -> tuple:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate Arduino Boards Manager package index.")
-    parser.add_argument("--version", default="0.1.0-alpha.8")
+    parser.add_argument("--version", default="0.1.0-alpha.9")
     parser.add_argument("--archive", required=True, help="Path to platform archive")
     parser.add_argument("--url", required=True, help="Download URL for platform archive")
     parser.add_argument("--output", default="package/package_chip-pump_cp8000_index.json")

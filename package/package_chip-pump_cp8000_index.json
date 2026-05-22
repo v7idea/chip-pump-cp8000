@@ -12,6 +12,31 @@
         {
           "name": "CHIP-PUMP CP8000 Boards",
           "architecture": "cp8000",
+          "version": "0.1.0-alpha.9",
+          "category": "Contributed",
+          "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.9/chippump-cp8000-0.1.0-alpha.9.tar.gz",
+          "archiveFileName": "chippump-cp8000-0.1.0-alpha.9.tar.gz",
+          "checksum": "SHA-256:0ef20e0eb072990ff74b2ba67c6bbdda98a8cdcb5243fed69f42b51a2faca116",
+          "size": "1884802",
+          "boards": [
+            {
+              "name": "CHIP-PUMP CP8001 SOP16"
+            },
+            {
+              "name": "CHIP-PUMP CP8003 SOP16"
+            }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "chippump",
+              "name": "cp8000-xuantie-elf-newlib",
+              "version": "0.1.0-alpha.9"
+            }
+          ]
+        },
+        {
+          "name": "CHIP-PUMP CP8000 Boards",
+          "architecture": "cp8000",
           "version": "0.1.0-alpha.8",
           "category": "Contributed",
           "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.8/chippump-cp8000-0.1.0-alpha.8.tar.gz",
@@ -26,13 +51,7 @@
               "name": "CHIP-PUMP CP8003 SOP16"
             }
           ],
-          "toolsDependencies": [
-            {
-              "packager": "chippump",
-              "name": "cp8000-xuantie-elf-newlib",
-              "version": "0.1.0-alpha.8"
-            }
-          ]
+          "toolsDependencies": []
         },
         {
           "name": "CHIP-PUMP CP8000 Boards",
@@ -152,28 +171,35 @@
       "tools": [
         {
           "name": "cp8000-xuantie-elf-newlib",
-          "version": "0.1.0-alpha.8",
+          "version": "0.1.0-alpha.9",
           "systems": [
             {
               "host": "x86_64-linux-gnu",
-              "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.8/cp8000-xuantie-elf-newlib-0.1.0-alpha.8-x86_64-linux-gnu.tar.gz",
-              "archiveFileName": "cp8000-xuantie-elf-newlib-0.1.0-alpha.8-x86_64-linux-gnu.tar.gz",
-              "checksum": "SHA-256:3e0464d2f058fc254cff451f4679c1757b4b6bb9fb9b409eda3dbacb1becc452",
-              "size": "255413265"
+              "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.9/cp8000-xuantie-elf-newlib-0.1.0-alpha.9-x86_64-linux-gnu.tar.gz",
+              "archiveFileName": "cp8000-xuantie-elf-newlib-0.1.0-alpha.9-x86_64-linux-gnu.tar.gz",
+              "checksum": "SHA-256:b38cc84248809d1d473e22e295715b1422a117500f0b34db69deb658119fe001",
+              "size": "255412993"
             },
             {
               "host": "i686-linux-gnu",
-              "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.8/cp8000-xuantie-elf-newlib-0.1.0-alpha.8-i686-linux-gnu.tar.gz",
-              "archiveFileName": "cp8000-xuantie-elf-newlib-0.1.0-alpha.8-i686-linux-gnu.tar.gz",
-              "checksum": "SHA-256:a871888336f64bb5c738c701c253d50103e7ac51afb2fa1d7ba58fe45406746a",
-              "size": "259398779"
+              "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.9/cp8000-xuantie-elf-newlib-0.1.0-alpha.9-i686-linux-gnu.tar.gz",
+              "archiveFileName": "cp8000-xuantie-elf-newlib-0.1.0-alpha.9-i686-linux-gnu.tar.gz",
+              "checksum": "SHA-256:06a5767387fa49d50ddc361424447bc9506b031e5f9057fe68625085e43d7774",
+              "size": "259398841"
             },
             {
               "host": "arm64-apple-darwin",
-              "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.8/cp8000-xuantie-elf-newlib-0.1.0-alpha.8-arm64-apple-darwin.tar.gz",
-              "archiveFileName": "cp8000-xuantie-elf-newlib-0.1.0-alpha.8-arm64-apple-darwin.tar.gz",
-              "checksum": "SHA-256:88342559add731037a9e90a35c545c007bcacf2637bd95b278bbe9948bd53dbe",
-              "size": "192055173"
+              "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.9/cp8000-xuantie-elf-newlib-0.1.0-alpha.9-arm64-apple-darwin.tar.gz",
+              "archiveFileName": "cp8000-xuantie-elf-newlib-0.1.0-alpha.9-arm64-apple-darwin.tar.gz",
+              "checksum": "SHA-256:4180fa58254643f7f391ef8ca610913e99c3e5cda1d3bcf63a75a07ca2abccef",
+              "size": "192055505"
+            },
+            {
+              "host": "i686-mingw32",
+              "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.9/cp8000-xuantie-elf-newlib-0.1.0-alpha.9-i686-mingw32.tar.gz",
+              "archiveFileName": "cp8000-xuantie-elf-newlib-0.1.0-alpha.9-i686-mingw32.tar.gz",
+              "checksum": "SHA-256:b99be7ea38bfa218557fcbc39009b2a6d25fa439b760009ac8a5232f5b511231",
+              "size": "261412616"
             }
           ]
         }
