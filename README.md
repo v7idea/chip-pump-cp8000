@@ -24,12 +24,12 @@ release asset.
 The latest versioned index is also available from the release that produced it:
 
 ```text
-https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.10/package_chip-pump_cp8000_index.json
+https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.1-alpha.1/package_chip-pump_cp8000_index.json
 ```
 
 ## Current Package
 
-`0.1.0-alpha.10` includes:
+`0.1.1-alpha.1` includes:
 
 - CP8000 Arduino core and board definitions for CP8001 SOP16 and CP8003 SOP16.
 - Board-scoped example categories:
@@ -41,8 +41,8 @@ https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.10/pack
 
 ## Toolchain Packages
 
-Starting with `0.1.0-alpha.10`, Arduino IDE / Arduino CLI downloads the
-`cp8000-xuantie-elf-newlib` tool automatically through `toolsDependencies`.
+Arduino IDE / Arduino CLI downloads `cp8000-xuantie-elf-newlib@0.1.0-alpha.9`
+automatically through the `0.1.1-alpha.1` platform `toolsDependencies`.
 
 Packaged hosts:
 
@@ -60,7 +60,7 @@ The Windows package is a PE32 i386 executable bundle, so the Arduino host is
 arduino-cli core update-index \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.0-alpha.10 \
+arduino-cli core install chippump:cp8000@0.1.1-alpha.1 \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
@@ -118,17 +118,19 @@ make package-tools
 make index
 ```
 
-Release assets expected by Boards Manager for `0.1.0-alpha.10`:
+Release assets expected by Boards Manager for `0.1.1-alpha.1`:
 
 - `package_chip-pump_cp8000_index.json`
-- `chippump-cp8000-0.1.0-alpha.10.tar.gz`
+- `chippump-cp8000-0.1.1-alpha.1.tar.gz`
 - `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-x86_64-linux-gnu.tar.gz`
 - `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-i686-linux-gnu.tar.gz`
 - `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-arm64-apple-darwin.tar.gz`
 - `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-i686-mingw32.tar.gz`
 
-`0.1.0-alpha.10` changes only the platform uploader recipe and reuses the
-`0.1.0-alpha.9` toolchain package through `toolsDependencies`.
+`0.1.1-alpha.1` changes only the platform uploader recipe and reuses the
+`0.1.0-alpha.9` toolchain package through `toolsDependencies`. The patch is
+released under `0.1.1-alpha.1` rather than `0.1.0-alpha.10` so Arduino IDE
+version sorting on Windows clearly treats it as newer than `0.1.0-alpha.9`.
 
 After publishing a versioned release, update the stable Boards Manager release:
 

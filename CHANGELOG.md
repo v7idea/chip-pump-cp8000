@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0-alpha.10
+## 0.1.1-alpha.1
 
 - Fixed Windows Arduino IDE upload by using the packaged
   `cp8000-uploader.cmd` launcher through a Windows-specific upload recipe
