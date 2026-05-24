@@ -16,6 +16,11 @@ whenever a new CP8000 package version is published. The package index itself
 keeps previously published alpha platform versions in the same `platforms`
 array, newest first.
 
+The stable `boards-manager` asset must also be updated for any issue fix that
+changes package metadata, upload recipes, platform archives, toolchain
+references, or public install instructions. Do not rely only on a versioned
+release asset.
+
 The latest versioned index is also available from the release that produced it:
 
 ```text
@@ -113,14 +118,17 @@ make package-tools
 make index
 ```
 
-Release assets expected by Boards Manager:
+Release assets expected by Boards Manager for `0.1.0-alpha.10`:
 
 - `package_chip-pump_cp8000_index.json`
 - `chippump-cp8000-0.1.0-alpha.10.tar.gz`
-- `cp8000-xuantie-elf-newlib-0.1.0-alpha.10-x86_64-linux-gnu.tar.gz`
-- `cp8000-xuantie-elf-newlib-0.1.0-alpha.10-i686-linux-gnu.tar.gz`
-- `cp8000-xuantie-elf-newlib-0.1.0-alpha.10-arm64-apple-darwin.tar.gz`
-- `cp8000-xuantie-elf-newlib-0.1.0-alpha.10-i686-mingw32.tar.gz`
+- `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-x86_64-linux-gnu.tar.gz`
+- `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-i686-linux-gnu.tar.gz`
+- `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-arm64-apple-darwin.tar.gz`
+- `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-i686-mingw32.tar.gz`
+
+`0.1.0-alpha.10` changes only the platform uploader recipe and reuses the
+`0.1.0-alpha.9` toolchain package through `toolsDependencies`.
 
 After publishing a versioned release, update the stable Boards Manager release:
 
