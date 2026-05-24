@@ -1,5 +1,5 @@
 name=CHIP-PUMP CP8000 Boards
-version=0.1.0-alpha.9
+version=0.1.0-alpha.10
 
 compiler.path={runtime.tools.cp8000-xuantie-elf-newlib.path}/bin/
 compiler.c.cmd=riscv64-unknown-elf-gcc
@@ -44,7 +44,8 @@ recipe.size.regex.data=^(?:\.data|\.bss|\.heap|\.stack)\s+([0-9]+).*
 
 tools.cp8000-uploader.path={runtime.platform.path}/tools/cp8000-uploader
 tools.cp8000-uploader.cmd=cp8000-uploader
-tools.cp8000-uploader.cmd.windows=cp8000-uploader.exe
+tools.cp8000-uploader.cmd.windows=cp8000-uploader.cmd
 tools.cp8000-uploader.upload.params.verbose=--verbose
 tools.cp8000-uploader.upload.params.quiet=
 tools.cp8000-uploader.upload.pattern="{path}/{cmd}" upload --protocol cp8xxx-binary --flash-write-mode cached --port "{serial.port}" --target "{upload.target}" --baud "{upload.speed}" --connect-timeout 60 --address "{build.flash_base}" --file "{build.path}/{build.project_name}.bin" {upload.verbose}
+tools.cp8000-uploader.upload.pattern.windows=cmd /C ""{path}/cp8000-uploader.cmd" upload --protocol cp8xxx-binary --flash-write-mode cached --port "{serial.port}" --target "{upload.target}" --baud "{upload.speed}" --connect-timeout 60 --address "{build.flash_base}" --file "{build.path}/{build.project_name}.bin" {upload.verbose}"

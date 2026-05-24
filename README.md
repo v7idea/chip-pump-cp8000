@@ -19,24 +19,24 @@ array, newest first.
 The latest versioned index is also available from the release that produced it:
 
 ```text
-https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.9/package_chip-pump_cp8000_index.json
+https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.10/package_chip-pump_cp8000_index.json
 ```
 
 ## Current Package
 
-`0.1.0-alpha.9` includes:
+`0.1.0-alpha.10` includes:
 
 - CP8000 Arduino core and board definitions for CP8001 SOP16 and CP8003 SOP16.
 - Board-scoped example categories:
   `01.GPIO`, `02.I2C_SPI`, `03.BLE`, `04.Serial`, `05.24GRadio`,
   `06.Watchdog`, and `07.OTA`.
-- CP8xxx UART uploader integration.
+- CP8xxx UART uploader integration, including the Windows `.cmd` launcher recipe.
 - Vendor CP8000 runtime libraries and linker assets required by the examples.
 - Boards Manager managed XuanTie ELF/Newlib compiler packages.
 
 ## Toolchain Packages
 
-Starting with `0.1.0-alpha.9`, Arduino IDE / Arduino CLI downloads the
+Starting with `0.1.0-alpha.10`, Arduino IDE / Arduino CLI downloads the
 `cp8000-xuantie-elf-newlib` tool automatically through `toolsDependencies`.
 
 Packaged hosts:
@@ -55,7 +55,7 @@ The Windows package is a PE32 i386 executable bundle, so the Arduino host is
 arduino-cli core update-index \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.0-alpha.9 \
+arduino-cli core install chippump:cp8000@0.1.0-alpha.10 \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
@@ -79,11 +79,11 @@ make index
 Release assets expected by Boards Manager:
 
 - `package_chip-pump_cp8000_index.json`
-- `chippump-cp8000-0.1.0-alpha.9.tar.gz`
-- `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-x86_64-linux-gnu.tar.gz`
-- `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-i686-linux-gnu.tar.gz`
-- `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-arm64-apple-darwin.tar.gz`
-- `cp8000-xuantie-elf-newlib-0.1.0-alpha.9-i686-mingw32.tar.gz`
+- `chippump-cp8000-0.1.0-alpha.10.tar.gz`
+- `cp8000-xuantie-elf-newlib-0.1.0-alpha.10-x86_64-linux-gnu.tar.gz`
+- `cp8000-xuantie-elf-newlib-0.1.0-alpha.10-i686-linux-gnu.tar.gz`
+- `cp8000-xuantie-elf-newlib-0.1.0-alpha.10-arm64-apple-darwin.tar.gz`
+- `cp8000-xuantie-elf-newlib-0.1.0-alpha.10-i686-mingw32.tar.gz`
 
 After publishing a versioned release, update the stable Boards Manager release:
 

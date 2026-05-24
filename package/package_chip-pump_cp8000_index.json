@@ -12,12 +12,12 @@
         {
           "name": "CHIP-PUMP CP8000 Boards",
           "architecture": "cp8000",
-          "version": "0.1.0-alpha.9",
+          "version": "0.1.0-alpha.10",
           "category": "Contributed",
-          "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.9/chippump-cp8000-0.1.0-alpha.9.tar.gz",
-          "archiveFileName": "chippump-cp8000-0.1.0-alpha.9.tar.gz",
-          "checksum": "SHA-256:0ef20e0eb072990ff74b2ba67c6bbdda98a8cdcb5243fed69f42b51a2faca116",
-          "size": "1884802",
+          "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.10/chippump-cp8000-0.1.0-alpha.10.tar.gz",
+          "archiveFileName": "chippump-cp8000-0.1.0-alpha.10.tar.gz",
+          "checksum": "SHA-256:306d968fb83acb9ceec5ab8e8d8ada1f1a6eee2c9febf6bc17206debfd39baa1",
+          "size": "1884883",
           "boards": [
             {
               "name": "CHIP-PUMP CP8001 SOP16"
@@ -33,6 +33,25 @@
               "version": "0.1.0-alpha.9"
             }
           ]
+        },
+        {
+          "name": "CHIP-PUMP CP8000 Boards",
+          "architecture": "cp8000",
+          "version": "0.1.0-alpha.9",
+          "category": "Contributed",
+          "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.0-alpha.9/chippump-cp8000-0.1.0-alpha.9.tar.gz",
+          "archiveFileName": "chippump-cp8000-0.1.0-alpha.9.tar.gz",
+          "checksum": "SHA-256:0ef20e0eb072990ff74b2ba67c6bbdda98a8cdcb5243fed69f42b51a2faca116",
+          "size": "1884802",
+          "boards": [
+            {
+              "name": "CHIP-PUMP CP8001 SOP16"
+            },
+            {
+              "name": "CHIP-PUMP CP8003 SOP16"
+            }
+          ],
+          "toolsDependencies": []
         },
         {
           "name": "CHIP-PUMP CP8000 Boards",

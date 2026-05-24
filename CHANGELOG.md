@@ -1,7 +1,10 @@
 # Changelog
 
-## 0.1.0-alpha.9
+## 0.1.0-alpha.10
 
+- Fixed Windows Arduino IDE upload by using the packaged
+  `cp8000-uploader.cmd` launcher through a Windows-specific upload recipe
+  instead of referencing a missing `cp8000-uploader.exe`.
 - Switched the CP8000 compiler recipe to the Boards Manager managed
   `cp8000-xuantie-elf-newlib` tool path.
 - Added package-index generation for hosted compiler `tools` and

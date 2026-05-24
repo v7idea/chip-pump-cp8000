@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-VERSION="${1:-0.1.0-alpha.9}"
+VERSION="${1:-0.1.0-alpha.10}"
 TAG="${2:-$VERSION}"
 OUT_DIR="$ROOT/package/dist"
 STAGE_DIR="$ROOT/package/tool-stage"
