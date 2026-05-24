@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-VERSION="${1:-0.1.1-alpha.1}"
+VERSION="${1:-0.1.1-alpha.2}"
 OUT_DIR="$ROOT/package/dist"
 STAGE="$ROOT/package/stage"
 ARCHIVE="$OUT_DIR/chippump-cp8000-$VERSION.tar.gz"

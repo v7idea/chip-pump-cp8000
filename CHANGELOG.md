@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.1-alpha.2
+
+- Fixed Windows Arduino IDE upload invocation by calling the packaged
+  `cp8000-uploader.cmd` directly instead of wrapping it in `cmd /C`.
+- Made the Arduino upload recipe explicitly pass the validated CP8xxx flash
+  flow: `prelude-sync`, manual boot reset, cached flash helper, self-start, and
+  vendor run address `0x20002000`.
+- Improved the Windows launcher to find `py -3`, `python3`, or `python`, and
+  print a clear Python setup error when no interpreter is available.
+
 ## 0.1.1-alpha.1
 
 - Fixed Windows Arduino IDE upload by using the packaged

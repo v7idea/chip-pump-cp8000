@@ -68,5 +68,12 @@
     "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.1-alpha.1/chippump-cp8000-0.1.1-alpha.1.tar.gz",
     "checksum": "SHA-256:3a063e4c082be0e71b37a3c6cbe42d4ab45536a141b3f92f4edca952b4a39fcc",
     "size": "1884822"
+  },
+  {
+    "version": "0.1.1-alpha.2",
+    "archiveFileName": "chippump-cp8000-0.1.1-alpha.2.tar.gz",
+    "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.1-alpha.2/chippump-cp8000-0.1.1-alpha.2.tar.gz",
+    "checksum": "SHA-256:44d65f872a6aef858b35d11d0d620f4139e4181075919c0175a2e909e6dccbbe",
+    "size": "1884981"
   }
 ]

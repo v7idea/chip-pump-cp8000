@@ -1,5 +1,5 @@
 name=CHIP-PUMP CP8000 Boards
-version=0.1.1-alpha.1
+version=0.1.1-alpha.2
 
 compiler.path={runtime.tools.cp8000-xuantie-elf-newlib.path}/bin/
 compiler.c.cmd=riscv64-unknown-elf-gcc
@@ -47,5 +47,5 @@ tools.cp8000-uploader.cmd=cp8000-uploader
 tools.cp8000-uploader.cmd.windows=cp8000-uploader.cmd
 tools.cp8000-uploader.upload.params.verbose=--verbose
 tools.cp8000-uploader.upload.params.quiet=
-tools.cp8000-uploader.upload.pattern="{path}/{cmd}" upload --protocol cp8xxx-binary --flash-write-mode cached --port "{serial.port}" --target "{upload.target}" --baud "{upload.speed}" --connect-timeout 60 --address "{build.flash_base}" --file "{build.path}/{build.project_name}.bin" {upload.verbose}
-tools.cp8000-uploader.upload.pattern.windows=cmd /C ""{path}/cp8000-uploader.cmd" upload --protocol cp8xxx-binary --flash-write-mode cached --port "{serial.port}" --target "{upload.target}" --baud "{upload.speed}" --connect-timeout 60 --address "{build.flash_base}" --file "{build.path}/{build.project_name}.bin" {upload.verbose}"
+tools.cp8000-uploader.upload.pattern="{path}/{cmd}" upload --protocol cp8xxx-binary --entry-sync-mode prelude-sync --boot-reset-method none --flash-write-mode cached --reset-method self-start --run-address 0x20002000 --port "{serial.port}" --target "{upload.target}" --baud "{upload.speed}" --connect-timeout 60 --address "{build.flash_base}" --file "{build.path}/{build.project_name}.bin" {upload.verbose}
+tools.cp8000-uploader.upload.pattern.windows="{path}/cp8000-uploader.cmd" upload --protocol cp8xxx-binary --entry-sync-mode prelude-sync --boot-reset-method none --flash-write-mode cached --reset-method self-start --run-address 0x20002000 --port "{serial.port}" --target "{upload.target}" --baud "{upload.speed}" --connect-timeout 60 --address "{build.flash_base}" --file "{build.path}/{build.project_name}.bin" {upload.verbose}
