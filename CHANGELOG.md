@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.1.1-alpha.4
+
+- Added first-run `pyserial` auto-install for uploader commands that need a
+  serial port, using the same Python interpreter launched by Arduino IDE.
+- Kept manual setup guidance and added `CP8000_UPLOADER_AUTO_INSTALL=0` as an
+  opt-out for managed/offline Python environments.
+
+## 0.1.1-alpha.3
+
+- Added clear `pyserial` setup guidance for Windows, macOS, and Linux upload
+  failures.
+- Made the uploader catch missing `pyserial` during upload and port listing so
+  Arduino IDE users see install commands instead of a Python traceback.
+- Documented the Python uploader dependency in the public Arduino CLI install
+  instructions.
+
 ## 0.1.1-alpha.2
 
 - Fixed Windows Arduino IDE upload invocation by calling the packaged

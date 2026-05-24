@@ -74,6 +74,41 @@
     "archiveFileName": "chippump-cp8000-0.1.1-alpha.2.tar.gz",
     "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.1-alpha.2/chippump-cp8000-0.1.1-alpha.2.tar.gz",
     "checksum": "SHA-256:44d65f872a6aef858b35d11d0d620f4139e4181075919c0175a2e909e6dccbbe",
-    "size": "1884981"
+    "size": "1884981",
+    "toolsDependencies": [
+      {
+        "packager": "chippump",
+        "name": "cp8000-xuantie-elf-newlib",
+        "version": "0.1.0-alpha.9"
+      }
+    ]
+  },
+  {
+    "version": "0.1.1-alpha.3",
+    "archiveFileName": "chippump-cp8000-0.1.1-alpha.3.tar.gz",
+    "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.1-alpha.3/chippump-cp8000-0.1.1-alpha.3.tar.gz",
+    "checksum": "SHA-256:c9d241fd2f354edd131ab800455de859cd966a6e9558df379235ad7862363922",
+    "size": "1819825",
+    "toolsDependencies": [
+      {
+        "packager": "chippump",
+        "name": "cp8000-xuantie-elf-newlib",
+        "version": "0.1.0-alpha.9"
+      }
+    ]
+  },
+  {
+    "version": "0.1.1-alpha.4",
+    "archiveFileName": "chippump-cp8000-0.1.1-alpha.4.tar.gz",
+    "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.1-alpha.4/chippump-cp8000-0.1.1-alpha.4.tar.gz",
+    "checksum": "SHA-256:2da2b08decfb9e70d458da24557be9f92b5cfb1bcc6fa877c7b193b8bb472fe8",
+    "size": "1820052",
+    "toolsDependencies": [
+      {
+        "packager": "chippump",
+        "name": "cp8000-xuantie-elf-newlib",
+        "version": "0.1.0-alpha.9"
+      }
+    ]
   }
 ]

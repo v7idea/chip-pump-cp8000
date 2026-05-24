@@ -1,4 +1,7 @@
 import argparse
+import importlib
+import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -23,6 +26,55 @@ def available_serial_ports() -> list[str]:
     except ImportError:
         return []
     return [port.device for port in list_ports.comports()]
+
+
+def print_pyserial_help(action: str) -> None:
+    print(f"cp8000-uploader: pyserial is required for {action}", file=sys.stderr)
+    print("Install it for the Python used by the uploader:", file=sys.stderr)
+    print("  Windows: py -3 -m pip install pyserial", file=sys.stderr)
+    print("  macOS/Linux: python3 -m pip install pyserial", file=sys.stderr)
+    print("Then retry the Arduino upload.", file=sys.stderr)
+
+
+def ensure_pyserial(action: str) -> bool:
+    try:
+        importlib.import_module("serial")
+        return True
+    except ImportError:
+        pass
+
+    if os.environ.get("CP8000_UPLOADER_AUTO_INSTALL", "1").lower() in ("0", "false", "no"):
+        print_pyserial_help(action)
+        return False
+
+    print(f"cp8000-uploader: pyserial is missing; installing it for {action}...", file=sys.stderr)
+    command = [
+        sys.executable,
+        "-m",
+        "pip",
+        "install",
+        "--user",
+        "--disable-pip-version-check",
+        "--no-input",
+        "pyserial>=3.5",
+    ]
+    try:
+        subprocess.check_call(command)
+    except Exception as exc:
+        print(f"cp8000-uploader: automatic pyserial install failed: {exc}", file=sys.stderr)
+        print_pyserial_help(action)
+        return False
+
+    importlib.invalidate_caches()
+    try:
+        importlib.import_module("serial")
+    except ImportError:
+        print("cp8000-uploader: pyserial installed, but Python still cannot import it.", file=sys.stderr)
+        print("Restart Arduino IDE and retry the upload.", file=sys.stderr)
+        return False
+
+    print("cp8000-uploader: pyserial installed successfully; continuing.", file=sys.stderr)
+    return True
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -162,6 +214,9 @@ def cmd_upload(args: argparse.Namespace) -> int:
         print(f"size={firmware.stat().st_size}")
         return 0
 
+    if not ensure_pyserial("upload"):
+        return 2
+
     request = UploadRequest(
         port=args.port,
         target=args.target,
@@ -191,6 +246,11 @@ def cmd_upload(args: argparse.Namespace) -> int:
     except TimeoutError as exc:
         print(f"cp8000-uploader: {exc}", file=sys.stderr)
         return 1
+    except RuntimeError as exc:
+        if "pyserial is required" in str(exc):
+            print_pyserial_help("upload")
+            return 2
+        raise
     except Exception as exc:
         if exc.__class__.__name__ == "SerialException":
             print(f"cp8000-uploader: cannot open serial port {request.port}: {exc}", file=sys.stderr)
@@ -218,10 +278,13 @@ def make_protocol(request: UploadRequest):
 
 def cmd_ports(args: argparse.Namespace) -> int:
     del args
+    if not ensure_pyserial("port listing"):
+        return 2
+
     try:
         from serial.tools import list_ports
     except ImportError:
-        print("error: pyserial is required for port listing", file=sys.stderr)
+        print_pyserial_help("port listing")
         return 2
 
     found = False
@@ -237,6 +300,9 @@ def cmd_ports(args: argparse.Namespace) -> int:
 
 
 def cmd_probe(args: argparse.Namespace) -> int:
+    if not ensure_pyserial("probe"):
+        return 2
+
     if args.baud != "default":
         print("error: DWC probe currently supports --baud default only", file=sys.stderr)
         return 2
@@ -259,6 +325,9 @@ def cmd_probe(args: argparse.Namespace) -> int:
 
 
 def cmd_binary_probe(args: argparse.Namespace) -> int:
+    if not ensure_pyserial("binary probe"):
+        return 2
+
     bauds = parse_baud_list(args.baud)
     print(f"cp8000-uploader: probing {args.port} with CP8xxx binary sync")
     print(f"cp8000-uploader: bauds={','.join(str(baud) for baud in bauds)}; reset or power-cycle the target now")
@@ -284,6 +353,9 @@ def cmd_binary_probe(args: argparse.Namespace) -> int:
 
 
 def cmd_binary_command(args: argparse.Namespace) -> int:
+    if not ensure_pyserial("binary command probing"):
+        return 2
+
     command = parse_address(args.command)
     payload = parse_hex(args.payload_hex)
     result = binary_command(
@@ -322,6 +394,9 @@ def print_packets(packets, prefix: str = "packet") -> None:
 
 
 def cmd_capture(args: argparse.Namespace) -> int:
+    if not ensure_pyserial("serial capture"):
+        return 2
+
     output = Path(args.output) if args.output else None
     request = CaptureRequest(
         port=args.port,
