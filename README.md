@@ -67,6 +67,43 @@ arduino-cli compile \
   arduino/hardware/chippump/cp8000/libraries/01.GPIO/examples/Blink
 ```
 
+## Windows IDE Refresh
+
+If Arduino IDE on Windows does not show the latest CP8000 package after a
+release:
+
+1. Close Arduino IDE.
+2. Open:
+
+   ```text
+   C:\Users\<USER>\AppData\Local\Arduino15
+   ```
+
+3. Delete cached CP8000 package indexes and downloads:
+
+   ```text
+   package_chip-pump_cp8000_index.json
+   package_chip-pump_cp8000_index.json.sig
+   staging\packages\chippump-cp8000-*.tar.gz
+   ```
+
+4. Reopen Arduino IDE.
+5. Confirm this URL is in Additional Boards Manager URLs:
+
+   ```text
+   https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
+   ```
+
+6. Open Boards Manager, search `CP8000`, and select the newest version from the
+   version dropdown.
+
+For command-line verification on Windows:
+
+```powershell
+arduino-cli core update-index --additional-urls "https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json"
+arduino-cli core search cp8000 --additional-urls "https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json"
+```
+
 ## Release Packaging
 
 Generate the platform archive, toolchain archives, and package index:
