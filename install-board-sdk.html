@@ -67,6 +67,30 @@
       font-size: 14px;
     }
 
+    .language-switch {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+    }
+
+    .language-switch a,
+    .language-switch strong {
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      font-size: 13px;
+      line-height: 1.2;
+      text-decoration: none;
+    }
+
+    .language-switch strong {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
     .hero {
       padding: 48px 0 28px;
     }
@@ -206,6 +230,12 @@
       color: var(--warn);
     }
 
+    .caution {
+      margin: 14px 0 0;
+      color: var(--warn);
+      font-weight: 700;
+    }
+
     .split {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -288,6 +318,7 @@
       <div class="brand">CHIP-PUMP CP8000 Arduino SDK</div>
       <nav aria-label="Page sections">
         <a href="#ide">Arduino IDE</a>
+        <a href="#windows-cache">Windows 快取</a>
         <a href="#python">Python</a>
         <a href="#cli">Arduino CLI</a>
       </nav>
@@ -298,6 +329,12 @@
     <section class="hero" aria-labelledby="title">
       <div class="hero-grid">
         <div>
+          <div class="language-switch" aria-label="Language versions">
+            <strong>繁體中文</strong>
+            <a href="install-board-sdk.zh-CN.html">简体中文</a>
+            <a href="install-board-sdk.ja.html">日本語</a>
+            <a href="install-board-sdk.en.html">English</a>
+          </div>
           <h1 id="title">安裝 CP8000 Board SDK</h1>
           <p class="lead">
             將 CHIP-PUMP CP8000 Boards Manager URL 加到 Arduino IDE 2.x 後，就能從 Boards Manager 安裝
@@ -335,6 +372,30 @@
           <p>從 <strong>Tools &gt; Board</strong> 選擇 <strong>CHIP-PUMP CP8001 SOP16</strong> 或 <strong>CP8003 SOP16</strong>，再選擇正確 serial port 上傳範例。</p>
         </article>
       </div>
+    </section>
+
+    <section id="windows-cache" aria-labelledby="cache-title">
+      <h2 id="cache-title">Windows Boards Manager 快取</h2>
+      <div class="note">
+        Windows 版 Arduino IDE 有時會保留舊的 Boards Manager index 或暫存套件，導致 IDE 仍只看到舊版 SDK。
+        若已確認公開 URL 有新版，但 Boards Manager 沒有更新，可以關閉 Arduino IDE 後清除下列 CP8000 相關快取，再重新開啟 IDE。
+      </div>
+      <div class="split" style="margin-top: 18px;">
+        <div class="panel">
+          <h3>可能需要清除的檔案</h3>
+          <pre><code>C:\Users\&lt;USER&gt;\AppData\Local\Arduino15\package_chip-pump_cp8000_index.json
+C:\Users\&lt;USER&gt;\AppData\Local\Arduino15\package_chip-pump_cp8000_index.json.sig
+C:\Users\&lt;USER&gt;\AppData\Local\Arduino15\staging\packages\chippump-cp8000-*.tar.gz</code></pre>
+        </div>
+        <div class="panel">
+          <h3>PowerShell 範例</h3>
+          <pre><code>$arduino15 = Join-Path $env:LOCALAPPDATA "Arduino15"
+Remove-Item "$arduino15\package_chip-pump_cp8000_index.json" -ErrorAction SilentlyContinue
+Remove-Item "$arduino15\package_chip-pump_cp8000_index.json.sig" -ErrorAction SilentlyContinue
+Remove-Item "$arduino15\staging\packages\chippump-cp8000-*.tar.gz" -ErrorAction SilentlyContinue</code></pre>
+        </div>
+      </div>
+      <p class="caution">只清除 CP8000 相關檔案即可，不建議刪除整個 Arduino15 目錄，以免影響其他已安裝的開發板與套件。</p>
     </section>
 
     <section id="python" aria-labelledby="python-title">

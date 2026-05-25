@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CHIP-PUMP CP8000 Board SDK インストールガイド</title>
+  <style>
+    :root { color-scheme: light; --ink: #172126; --muted: #5d6b73; --line: #d9e0e5; --panel: #fff; --wash: #f4f7f9; --accent: #008184; --accent-deep: #005f62; --code: #eef5f6; --warn: #8a4f00; --warn-bg: #fff5df; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif; color: var(--ink); background: var(--wash); line-height: 1.6; }
+    a { color: var(--accent-deep); }
+    .topbar { border-bottom: 1px solid var(--line); background: var(--panel); }
+    .topbar-inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .topbar-inner { display: flex; align-items: center; justify-content: space-between; min-height: 64px; gap: 16px; }
+    .brand { font-size: 18px; font-weight: 700; letter-spacing: 0; white-space: nowrap; }
+    .topbar nav { display: flex; gap: 18px; font-size: 14px; }
+    .language-switch { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+    .language-switch a, .language-switch strong { padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); font-size: 13px; line-height: 1.2; text-decoration: none; }
+    .language-switch strong { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .hero { padding: 48px 0 28px; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(340px, 1.05fr); gap: 36px; align-items: center; }
+    h1 { margin: 0 0 16px; font-size: clamp(34px, 5vw, 56px); line-height: 1.05; letter-spacing: 0; }
+    .lead { max-width: 680px; margin: 0 0 22px; color: var(--muted); font-size: 18px; }
+    .url-copy { display: grid; gap: 8px; max-width: 760px; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+    .url-copy span { color: var(--muted); font-size: 13px; font-weight: 700; text-transform: uppercase; }
+    code, pre { font-family: Consolas, "SFMono-Regular", Menlo, monospace; }
+    .url-copy code { overflow-wrap: anywhere; padding: 10px 12px; border-radius: 6px; background: var(--code); color: #063f42; font-size: 14px; }
+    .screenshot-wrap { margin: 0; }
+    .screenshot-wrap img { display: block; width: 100%; height: auto; border: 1px solid #bfccd4; border-radius: 8px; background: #fff; box-shadow: 0 18px 42px rgba(16, 31, 36, 0.16); }
+    .screenshot-wrap figcaption { margin-top: 10px; color: var(--muted); font-size: 13px; text-align: center; }
+    section { padding: 26px 0; }
+    h2 { margin: 0 0 14px; font-size: 26px; line-height: 1.25; letter-spacing: 0; }
+    .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; counter-reset: step; }
+    .step { min-height: 188px; padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); counter-increment: step; }
+    .step::before { content: counter(step); display: inline-grid; place-items: center; width: 30px; height: 30px; margin-bottom: 12px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; }
+    .step h3 { margin: 0 0 8px; font-size: 18px; line-height: 1.25; letter-spacing: 0; }
+    .step p { margin: 0; color: var(--muted); font-size: 15px; }
+    .note { padding: 16px 18px; border: 1px solid #f1c978; border-radius: 8px; background: var(--warn-bg); color: var(--warn); }
+    .caution { margin: 14px 0 0; color: var(--warn); font-weight: 700; }
+    .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+    .panel { padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+    .panel h3 { margin: 0 0 10px; font-size: 18px; letter-spacing: 0; }
+    pre { overflow-x: auto; margin: 0; padding: 14px; border-radius: 8px; background: #102429; color: #d9fbff; font-size: 13px; line-height: 1.5; }
+    footer { margin-top: 18px; padding: 24px 0 40px; color: var(--muted); font-size: 13px; text-align: center; }
+    @media (max-width: 920px) { .hero-grid, .split { grid-template-columns: 1fr; } .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 560px) { .topbar-inner { align-items: flex-start; flex-direction: column; justify-content: center; padding: 12px 0; } .topbar nav { flex-wrap: wrap; gap: 10px 14px; } .hero { padding-top: 34px; } .steps { grid-template-columns: 1fr; } .step { min-height: 0; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">CHIP-PUMP CP8000 Arduino SDK</div>
+      <nav aria-label="ページ内セクション">
+        <a href="#ide">Arduino IDE</a>
+        <a href="#windows-cache">Windows キャッシュ</a>
+        <a href="#python">Python</a>
+        <a href="#cli">Arduino CLI</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="title">
+      <div class="hero-grid">
+        <div>
+          <div class="language-switch" aria-label="言語バージョン">
+            <a href="install-board-sdk.html">繁體中文</a>
+            <a href="install-board-sdk.zh-CN.html">简体中文</a>
+            <strong>日本語</strong>
+            <a href="install-board-sdk.en.html">English</a>
+          </div>
+          <h1 id="title">CP8000 Board SDK のインストール</h1>
+          <p class="lead">CHIP-PUMP CP8000 Boards Manager URL を Arduino IDE 2.x に追加すると、CP8001 SOP16 と CP8003 SOP16 の board package、ツールチェーン、uploader をインストールできます。</p>
+          <div class="url-copy" aria-label="Boards Manager URL">
+            <span>Boards Manager URL</span>
+            <code>https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json</code>
+          </div>
+        </div>
+        <figure class="screenshot-wrap">
+          <img src="assets/arduino-ide-board-manager-cp8000.png" alt="Arduino IDE Boards Manager で CP8000 を検索し CHIP-PUMP CP8000 Boards が表示されている画面">
+          <figcaption>Arduino IDE 2.x Boards Manager で CP8000 を検索した画面です。</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section id="ide" aria-labelledby="ide-title">
+      <h2 id="ide-title">Arduino IDE の手順</h2>
+      <div class="steps">
+        <article class="step"><h3>Preferences を開く</h3><p>Arduino IDE で <strong>File &gt; Preferences</strong> を開き、<strong>Additional Boards Manager URLs</strong> を探します。</p></article>
+        <article class="step"><h3>URL を貼り付ける</h3><p>上記の固定 URL を入力欄に貼り付けます。ほかの URL がある場合は、カンマまたは改行で区切ってください。</p></article>
+        <article class="step"><h3>CP8000 をインストール</h3><p><strong>Tools &gt; Board &gt; Boards Manager</strong> を開き、<strong>CP8000</strong> を検索して <strong>CHIP-PUMP CP8000 Boards</strong> をインストールします。</p></article>
+        <article class="step"><h3>ボードを選択</h3><p><strong>Tools &gt; Board</strong> から <strong>CHIP-PUMP CP8001 SOP16</strong> または <strong>CP8003 SOP16</strong> を選び、正しい serial port を選択してサンプルをアップロードします。</p></article>
+      </div>
+    </section>
+    <section id="windows-cache" aria-labelledby="cache-title">
+      <h2 id="cache-title">Windows Boards Manager キャッシュ</h2>
+      <div class="note">Windows 版 Arduino IDE は古い Boards Manager index や一時パッケージを保持することがあり、IDE で古い SDK バージョンだけが表示される場合があります。公開 URL に新しいリリースがあることを確認済みなのに Boards Manager が更新されない場合は、Arduino IDE を閉じてから下記の CP8000 関連キャッシュだけを削除し、IDE を再起動してください。</div>
+      <div class="split" style="margin-top: 18px;">
+        <div class="panel">
+          <h3>削除候補のファイル</h3>
+          <pre><code>C:\Users\&lt;USER&gt;\AppData\Local\Arduino15\package_chip-pump_cp8000_index.json
+C:\Users\&lt;USER&gt;\AppData\Local\Arduino15\package_chip-pump_cp8000_index.json.sig
+C:\Users\&lt;USER&gt;\AppData\Local\Arduino15\staging\packages\chippump-cp8000-*.tar.gz</code></pre>
+        </div>
+        <div class="panel">
+          <h3>PowerShell の例</h3>
+          <pre><code>$arduino15 = Join-Path $env:LOCALAPPDATA "Arduino15"
+Remove-Item "$arduino15\package_chip-pump_cp8000_index.json" -ErrorAction SilentlyContinue
+Remove-Item "$arduino15\package_chip-pump_cp8000_index.json.sig" -ErrorAction SilentlyContinue
+Remove-Item "$arduino15\staging\packages\chippump-cp8000-*.tar.gz" -ErrorAction SilentlyContinue</code></pre>
+        </div>
+      </div>
+      <p class="caution">Arduino15 ディレクトリ全体は削除しないでください。ほかのインストール済みボードやパッケージにも影響します。</p>
+    </section>
+    <section id="python" aria-labelledby="python-title">
+      <h2 id="python-title">Uploader の要件</h2>
+      <div class="note">CP8000 uploader には Python 3.9 以降と <code>pyserial</code> が必要です。<code>0.1.1-alpha.4</code> 以降、serial port が必要な uploader コマンドは <code>pyserial</code> の自動インストールを試みます。管理された環境やオフライン環境では、事前に手動インストールしてください。</div>
+      <div class="split" style="margin-top: 18px;">
+        <div class="panel"><h3>Windows</h3><pre><code>py -3 -m pip install pyserial</code></pre></div>
+        <div class="panel"><h3>macOS / Linux</h3><pre><code>python3 -m pip install pyserial</code></pre></div>
+      </div>
+    </section>
+    <section id="cli" aria-labelledby="cli-title">
+      <h2 id="cli-title">Arduino CLI インストール</h2>
+      <div class="panel"><pre><code>arduino-cli core update-index \
+  --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
+
+arduino-cli core install chippump:cp8000 \
+  --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json</code></pre></div>
+    </section>
+    <footer>公開インストール手順では、常に安定版の <code>boards-manager</code> release URL を使用してください。</footer>
+  </main>
+</body>
+</html>

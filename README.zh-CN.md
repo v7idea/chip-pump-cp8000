@@ -4,6 +4,11 @@
 
 这是 CHIP-PUMP CP8000/CP800X 开发板的 Arduino Boards Manager 套件。
 
+图形化 Arduino IDE 安装指南：[简体中文](install-board-sdk.zh-CN.html) |
+[繁體中文](install-board-sdk.html) |
+[日本語](install-board-sdk.ja.html) |
+[English](install-board-sdk.en.html)
+
 ## Boards Manager URL
 
 请使用这个固定公开 Boards Manager URL：
