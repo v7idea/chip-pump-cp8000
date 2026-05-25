@@ -4,6 +4,8 @@ Languages: [English](README.md) | [繁體中文](README.zh-TW.md) | [简体中�
 
 Arduino Boards Manager package for CHIP-PUMP CP8000/CP800X boards.
 
+Visual Arduino IDE install guide: [install-board-sdk.html](install-board-sdk.html)
+
 ## Boards Manager URL
 
 Use this fixed public Boards Manager URL:

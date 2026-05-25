@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CHIP-PUMP CP8000 Board SDK 安裝教學</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172126;
+      --muted: #5d6b73;
+      --line: #d9e0e5;
+      --panel: #ffffff;
+      --wash: #f4f7f9;
+      --accent: #008184;
+      --accent-deep: #005f62;
+      --code: #eef5f6;
+      --warn: #8a4f00;
+      --warn-bg: #fff5df;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      color: var(--ink);
+      background: var(--wash);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent-deep);
+    }
+
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .topbar-inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 64px;
+      gap: 16px;
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .topbar nav {
+      display: flex;
+      gap: 18px;
+      font-size: 14px;
+    }
+
+    .hero {
+      padding: 48px 0 28px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(340px, 1.05fr);
+      gap: 36px;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 680px;
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .url-copy {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      max-width: 760px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .url-copy span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    code,
+    pre {
+      font-family: Consolas, "SFMono-Regular", Menlo, monospace;
+    }
+
+    .url-copy code {
+      overflow-wrap: anywhere;
+      padding: 10px 12px;
+      border-radius: 6px;
+      background: var(--code);
+      color: #063f42;
+      font-size: 14px;
+    }
+
+    .screenshot-wrap {
+      margin: 0;
+    }
+
+    .screenshot-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid #bfccd4;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 18px 42px rgba(16, 31, 36, 0.16);
+    }
+
+    .screenshot-wrap figcaption {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    section {
+      padding: 26px 0;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 26px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      counter-reset: step;
+    }
+
+    .step {
+      min-height: 188px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      counter-increment: step;
+    }
+
+    .step::before {
+      content: counter(step);
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      margin-bottom: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .note {
+      padding: 16px 18px;
+      border: 1px solid #f1c978;
+      border-radius: 8px;
+      background: var(--warn-bg);
+      color: var(--warn);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .panel {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .panel h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 0;
+      padding: 14px;
+      border-radius: 8px;
+      background: #102429;
+      color: #d9fbff;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    footer {
+      margin-top: 18px;
+      padding: 24px 0 40px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        padding: 12px 0;
+      }
+
+      .topbar nav {
+        flex-wrap: wrap;
+        gap: 10px 14px;
+      }
+
+      .hero {
+        padding-top: 34px;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .step {
+        min-height: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">CHIP-PUMP CP8000 Arduino SDK</div>
+      <nav aria-label="Page sections">
+        <a href="#ide">Arduino IDE</a>
+        <a href="#python">Python</a>
+        <a href="#cli">Arduino CLI</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="title">
+      <div class="hero-grid">
+        <div>
+          <h1 id="title">安裝 CP8000 Board SDK</h1>
+          <p class="lead">
+            將 CHIP-PUMP CP8000 Boards Manager URL 加到 Arduino IDE 2.x 後，就能從 Boards Manager 安裝
+            CP8001 SOP16 與 CP8003 SOP16 的 board package、工具鏈與 uploader。
+          </p>
+          <div class="url-copy" aria-label="Boards Manager URL">
+            <span>Boards Manager URL</span>
+            <code>https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json</code>
+          </div>
+        </div>
+        <figure class="screenshot-wrap">
+          <img src="assets/arduino-ide-board-manager-cp8000.png" alt="Arduino IDE Boards Manager 搜尋 CP8000 並顯示 CHIP-PUMP CP8000 Boards 安裝選項的截圖">
+          <figcaption>Arduino IDE 2.x Boards Manager 中搜尋 CP8000 的畫面。</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="ide" aria-labelledby="ide-title">
+      <h2 id="ide-title">Arduino IDE 安裝步驟</h2>
+      <div class="steps">
+        <article class="step">
+          <h3>開啟偏好設定</h3>
+          <p>在 Arduino IDE 選擇 <strong>File &gt; Preferences</strong>，找到 <strong>Additional Boards Manager URLs</strong>。</p>
+        </article>
+        <article class="step">
+          <h3>貼上 URL</h3>
+          <p>將上方固定 URL 貼入欄位。若已有其他 URL，請用逗號或換行分隔。</p>
+        </article>
+        <article class="step">
+          <h3>安裝 CP8000</h3>
+          <p>開啟 <strong>Tools &gt; Board &gt; Boards Manager</strong>，搜尋 <strong>CP8000</strong>，安裝 <strong>CHIP-PUMP CP8000 Boards</strong>。</p>
+        </article>
+        <article class="step">
+          <h3>選擇板子</h3>
+          <p>從 <strong>Tools &gt; Board</strong> 選擇 <strong>CHIP-PUMP CP8001 SOP16</strong> 或 <strong>CP8003 SOP16</strong>，再選擇正確 serial port 上傳範例。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="python" aria-labelledby="python-title">
+      <h2 id="python-title">上傳工具需求</h2>
+      <div class="note">
+        CP8000 uploader 需要 Python 3.9 以上與 <code>pyserial</code>。自 <code>0.1.1-alpha.4</code> 起，需要 serial port 的 uploader
+        指令會嘗試自動安裝 <code>pyserial</code>；在受控或離線環境可先手動安裝。
+      </div>
+      <div class="split" style="margin-top: 18px;">
+        <div class="panel">
+          <h3>Windows</h3>
+          <pre><code>py -3 -m pip install pyserial</code></pre>
+        </div>
+        <div class="panel">
+          <h3>macOS / Linux</h3>
+          <pre><code>python3 -m pip install pyserial</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="cli" aria-labelledby="cli-title">
+      <h2 id="cli-title">Arduino CLI 安裝</h2>
+      <div class="panel">
+        <pre><code>arduino-cli core update-index \
+  --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
+
+arduino-cli core install chippump:cp8000 \
+  --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json</code></pre>
+      </div>
+    </section>
+
+    <footer>
+      Public install instructions should always use the stable <code>boards-manager</code> release URL.
+    </footer>
+  </main>
+</body>
+</html>
