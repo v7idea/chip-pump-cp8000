@@ -58,12 +58,19 @@ python3 -m pip install pyserial
 7. **CHIP-PUMP CP8001 SOP16** などのボードを選択します。
 8. 正しい serial port を選択し、サンプルをアップロードします。
 
-Arduino IDE に最新の CP8000 バージョンが表示されない場合は、Arduino IDE を閉じて、
-次の場所にあるキャッシュファイルを削除してください。
+### Windows Boards Manager キャッシュ
+
+Windows 版 Arduino IDE は、公開 URL が更新された後でも古い Boards Manager
+package index を保持することがあります。Boards Manager に古い CP8000
+バージョン、たとえば `0.1.0-alpha.9` だけが表示される場合や、最新リリースが
+表示されない場合は、Arduino IDE を閉じて、CP8000 関連のキャッシュファイルだけを
+削除してください。
 
 ```text
 C:\Users\<USER>\AppData\Local\Arduino15
 ```
+
+削除対象になる可能性があるファイル：
 
 ```text
 package_chip-pump_cp8000_index.json
@@ -71,7 +78,19 @@ package_chip-pump_cp8000_index.json.sig
 staging\packages\chippump-cp8000-*.tar.gz
 ```
 
-その後 Arduino IDE を再起動し、Boards Manager のバージョンドロップダウンを確認してください。
+PowerShell の例：
+
+```powershell
+$arduino15 = Join-Path $env:LOCALAPPDATA "Arduino15"
+Remove-Item "$arduino15\package_chip-pump_cp8000_index.json" -ErrorAction SilentlyContinue
+Remove-Item "$arduino15\package_chip-pump_cp8000_index.json.sig" -ErrorAction SilentlyContinue
+Remove-Item "$arduino15\staging\packages\chippump-cp8000-*.tar.gz" -ErrorAction SilentlyContinue
+```
+
+すべてのボードパッケージとキャッシュを意図的に削除したい場合を除き、
+`Arduino15` ディレクトリ全体は削除しないでください。CP8000 キャッシュを削除した後、
+Arduino IDE を再起動し、Additional Boards Manager URL が正しいことを確認してから、
+Boards Manager のバージョンドロップダウンを再確認してください。
 
 ## Arduino CLI でのインストール
 

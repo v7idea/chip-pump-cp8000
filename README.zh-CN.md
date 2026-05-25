@@ -58,11 +58,18 @@ python3 -m pip install pyserial
 7. 选择开发板，例如 **CHIP-PUMP CP8001 SOP16**。
 8. 选择正确的 serial port，然后上传示例程序。
 
-如果 Arduino IDE 没有显示最新 CP8000 版本，请关闭 Arduino IDE，并删除以下缓存文件：
+### Windows Boards Manager 缓存
+
+Windows 版 Arduino IDE 有时会保留旧的 Boards Manager package index，
+即使公开 URL 已经更新，Boards Manager 仍可能只显示旧版 CP8000，例如
+`0.1.0-alpha.9`。如果没有看到最新版，请先关闭 Arduino IDE，然后只清除
+CP8000 相关缓存文件：
 
 ```text
 C:\Users\<USER>\AppData\Local\Arduino15
 ```
+
+可能需要删除的文件：
 
 ```text
 package_chip-pump_cp8000_index.json
@@ -70,7 +77,18 @@ package_chip-pump_cp8000_index.json.sig
 staging\packages\chippump-cp8000-*.tar.gz
 ```
 
-然后重新打开 Arduino IDE，并检查 Boards Manager 的版本下拉菜单。
+PowerShell 示例：
+
+```powershell
+$arduino15 = Join-Path $env:LOCALAPPDATA "Arduino15"
+Remove-Item "$arduino15\package_chip-pump_cp8000_index.json" -ErrorAction SilentlyContinue
+Remove-Item "$arduino15\package_chip-pump_cp8000_index.json.sig" -ErrorAction SilentlyContinue
+Remove-Item "$arduino15\staging\packages\chippump-cp8000-*.tar.gz" -ErrorAction SilentlyContinue
+```
+
+除非你有意移除所有已安装开发板套件和缓存，否则不要删除整个
+`Arduino15` 目录。清除 CP8000 缓存后，重新打开 Arduino IDE，确认
+Additional Boards Manager URL 正确，再检查 Boards Manager 的版本下拉菜单。
 
 ## Arduino CLI 安装
 
