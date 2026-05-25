@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.1
+
+- Promoted the current CP8000 Arduino Boards Manager package to the first
+  `0.1.1` release.
+- Kept the reset or power-cycle upload reminder before serial bootloader
+  connection attempts.
+- Added multilingual public install guide pages and Windows Boards Manager
+  cache cleanup guidance.
+- Fixed package-index version sorting so stable releases sort above matching
+  prerelease builds.
+
 ## 0.1.1-alpha.4
 
 - Added first-run `pyserial` auto-install for uploader commands that need a

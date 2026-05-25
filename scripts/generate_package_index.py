@@ -39,12 +39,20 @@ def platform_entry(
 
 
 def version_key(version: str) -> tuple:
-    return tuple(int(part) if part.isdigit() else part for part in version.replace("-", ".").split("."))
+    base, separator, prerelease = version.partition("-")
+    base_parts = tuple(int(part) for part in base.split("."))
+    if not separator:
+        return (base_parts, 1, ())
+
+    prerelease_parts = []
+    for part in prerelease.replace("-", ".").split("."):
+        prerelease_parts.append((0, int(part)) if part.isdigit() else (1, part))
+    return (base_parts, 0, tuple(prerelease_parts))
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate Arduino Boards Manager package index.")
-    parser.add_argument("--version", default="0.1.1-alpha.4")
+    parser.add_argument("--version", default="0.1.1")
     parser.add_argument("--archive", required=True, help="Path to platform archive")
     parser.add_argument("--url", required=True, help="Download URL for platform archive")
     parser.add_argument("--output", default="package/package_chip-pump_cp8000_index.json")

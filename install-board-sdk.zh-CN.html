@@ -112,7 +112,7 @@ Remove-Item "$arduino15\staging\packages\chippump-cp8000-*.tar.gz" -ErrorAction 
     </section>
     <section id="python" aria-labelledby="python-title">
       <h2 id="python-title">上传工具需求</h2>
-      <div class="note">CP8000 uploader 需要 Python 3.9 以上与 <code>pyserial</code>。自 <code>0.1.1-alpha.4</code> 起，需要 serial port 的 uploader 指令会尝试自动安装 <code>pyserial</code>；在受控或离线环境可先手动安装。</div>
+      <div class="note">CP8000 uploader 需要 Python 3.9 以上与 <code>pyserial</code>。自 <code>0.1.1</code> 起，需要 serial port 的 uploader 指令会尝试自动安装 <code>pyserial</code>；在受控或离线环境可先手动安装。</div>
       <div class="split" style="margin-top: 18px;">
         <div class="panel"><h3>Windows</h3><pre><code>py -3 -m pip install pyserial</code></pre></div>
         <div class="panel"><h3>macOS / Linux</h3><pre><code>python3 -m pip install pyserial</code></pre></div>

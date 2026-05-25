@@ -30,7 +30,7 @@ this `boards-manager` release asset, not to a versioned package index.
 - USB-to-UART driver for your adapter or board.
 
 The CP8000 uploader uses Python `pyserial` for serial-port access. Starting in
-`0.1.1-alpha.4`, uploader commands that need a serial port check for
+`0.1.1`, uploader commands that need a serial port check for
 `pyserial` and try to install it automatically with the same Python interpreter:
 
 ```bash
@@ -103,7 +103,7 @@ Boards Manager version dropdown again.
 arduino-cli core update-index \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.1-alpha.4 \
+arduino-cli core install chippump:cp8000@0.1.1 \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
@@ -117,7 +117,7 @@ arduino-cli compile \
 
 ## Current Package
 
-`0.1.1-alpha.4` includes:
+`0.1.1` includes:
 
 - CP8000 Arduino core and board definitions for CP8001 SOP16 and CP8003 SOP16.
 - Board-scoped example categories:
@@ -132,5 +132,6 @@ arduino-cli compile \
 
 ## Notes
 
-This package is an alpha release for hardware bring-up and Arduino ecosystem
-validation. BLE, OTA, and production flashing workflows may still change.
+This package is an early public release for hardware bring-up and Arduino
+ecosystem validation. BLE, OTA, and production flashing workflows may still
+change.
