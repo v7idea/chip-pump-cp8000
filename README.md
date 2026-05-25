@@ -1,5 +1,7 @@
 # CHIP-PUMP CP8000 Arduino SDK
 
+Languages: [English](README.md) | [繁體中文](README.zh-TW.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
+
 Arduino Boards Manager package for CHIP-PUMP CP8000/CP800X boards.
 
 ## Boards Manager URL
