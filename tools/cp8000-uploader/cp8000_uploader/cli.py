@@ -77,6 +77,20 @@ def ensure_pyserial(action: str) -> bool:
     return True
 
 
+def print_upload_reset_notice(args: argparse.Namespace) -> None:
+    timeout = getattr(args, "connect_timeout", 20.0)
+    port = getattr(args, "port", "")
+    print("cp8000-uploader: upload is starting.", file=sys.stderr)
+    print(
+        "cp8000-uploader: reset or power-cycle the CP8000 board now to enter bootloader mode.",
+        file=sys.stderr,
+    )
+    print(
+        f"cp8000-uploader: waiting up to {timeout:.1f}s for bootloader on {port}.",
+        file=sys.stderr,
+    )
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="cp8000-uploader",
@@ -213,6 +227,8 @@ def cmd_upload(args: argparse.Namespace) -> int:
         print(f"file={firmware}")
         print(f"size={firmware.stat().st_size}")
         return 0
+
+    print_upload_reset_notice(args)
 
     if not ensure_pyserial("upload"):
         return 2
