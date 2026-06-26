@@ -28,7 +28,7 @@ release asset，而不是指向某个特定版本的 package index。
 - 该 Python 安装需要可使用 `pip`。
 - USB-to-UART 转接器或开发板所需的驱动程序。
 
-CP8000 uploader 使用 Python `pyserial` 访问 serial port。从 `0.1.1`
+CP8000 uploader 使用 Python `pyserial` 访问 serial port。从 `0.1.2`
 开始，需要 serial port 的 uploader 命令会检查 `pyserial`，并尝试用 Arduino IDE
 启动的同一个 Python 自动安装：
 
@@ -60,7 +60,7 @@ python3 -m pip install pyserial
 4. 打开 **Tools > Board > Boards Manager**。
 5. 搜索 `CP8000`。
 6. 安装 `CHIP-PUMP CP8000 Boards`。
-7. 选择开发板，例如 **CHIP-PUMP CP8001 SOP16**。
+7. 选择开发板，例如 **CP801X-Mini**。
 8. 选择正确的 serial port，然后上传示例程序。
 
 ### Windows Boards Manager 缓存
@@ -101,7 +101,7 @@ Additional Boards Manager URL 正确，再检查 Boards Manager 的版本下拉�
 arduino-cli core update-index \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.1 \
+arduino-cli core install chippump:cp8000@0.1.2 \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
@@ -115,9 +115,9 @@ arduino-cli compile \
 
 ## 当前套件
 
-`0.1.1` 包含：
+`0.1.2` 包含：
 
-- CP8000 Arduino core，以及 CP8001 SOP16、CP8003 SOP16 开发板定义。
+- CP8000 Arduino core，以及 CP801X-Mini 开发板定义。
 - 按开发板分类的示例：
   `01.GPIO`、`02.I2C_SPI`、`03.BLE`、`04.Serial`、`05.24GRadio`、
   `06.Watchdog`、`07.OTA`。

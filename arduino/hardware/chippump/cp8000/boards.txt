@@ -2,7 +2,7 @@ menu.boot=Boot Target
 menu.log=SDK Log
 menu.blelog=Vendor BLE Log
 
-cp8001_sop16.name=CHIP-PUMP CP8001 SOP16
+cp8001_sop16.name=CP801X-Mini
 
 cp8001_sop16.upload.tool=cp8000-uploader
 cp8001_sop16.upload.protocol=cp8000-uart
@@ -42,41 +42,3 @@ cp8001_sop16.menu.blelog.disabled=Disabled
 cp8001_sop16.menu.blelog.disabled.build.vendor_ble_log_flags=-DCP8000_VENDOR_BLE_LOG_ENABLED=0
 cp8001_sop16.menu.blelog.enabled=Enabled
 cp8001_sop16.menu.blelog.enabled.build.vendor_ble_log_flags=-DCP8000_VENDOR_BLE_LOG_ENABLED=1
-
-cp8003_sop16.name=CHIP-PUMP CP8003 SOP16
-
-cp8003_sop16.upload.tool=cp8000-uploader
-cp8003_sop16.upload.protocol=cp8000-uart
-cp8003_sop16.upload.maximum_size=16384
-cp8003_sop16.upload.maximum_data_size=13824
-cp8003_sop16.upload.speed=default
-cp8003_sop16.upload.target=otp
-
-cp8003_sop16.build.mcu=e902m
-cp8003_sop16.build.f_cpu=48000000L
-cp8003_sop16.build.board=CP8003_SOP16
-cp8003_sop16.build.core=cp8000
-cp8003_sop16.build.variant=cp8003_sop16
-cp8003_sop16.build.flash_base=0x1F800000
-cp8003_sop16.build.linker=cp800x_2g4_otp.ld
-cp8003_sop16.build.extra_flags=-DARDUINO_CP8003_SOP16 -DCP8000_FLASH_BASE=0x1F800000
-
-cp8003_sop16.menu.boot.otp=OTP
-cp8003_sop16.menu.boot.otp.upload.target=otp
-cp8003_sop16.menu.boot.otp.build.flash_base=0x1F800000
-cp8003_sop16.menu.boot.otp.build.linker=cp800x_2g4_otp.ld
-
-cp8003_sop16.menu.boot.flash=Flash
-cp8003_sop16.menu.boot.flash.upload.target=flash
-cp8003_sop16.menu.boot.flash.build.flash_base=0x10000000
-cp8003_sop16.menu.boot.flash.build.linker=cp800x_2g4_flash.ld
-
-cp8003_sop16.menu.log.enabled=Enabled
-cp8003_sop16.menu.log.enabled.build.log_flags=
-cp8003_sop16.menu.log.disabled=Disabled
-cp8003_sop16.menu.log.disabled.build.log_flags=
-
-cp8003_sop16.menu.blelog.disabled=Disabled
-cp8003_sop16.menu.blelog.disabled.build.vendor_ble_log_flags=-DCP8000_VENDOR_BLE_LOG_ENABLED=0
-cp8003_sop16.menu.blelog.enabled=Enabled
-cp8003_sop16.menu.blelog.enabled.build.vendor_ble_log_flags=-DCP8000_VENDOR_BLE_LOG_ENABLED=1

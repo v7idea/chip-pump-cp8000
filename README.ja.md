@@ -29,7 +29,7 @@ https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/pack
 - 使用する USB-to-UART アダプターまたはボード用のドライバー。
 
 CP8000 uploader は serial port アクセスに Python `pyserial` を使用します。
-`0.1.1` 以降、serial port が必要な uploader コマンドは `pyserial` を確認し、
+`0.1.2` 以降、serial port が必要な uploader コマンドは `pyserial` を確認し、
 Arduino IDE から起動されたものと同じ Python で自動インストールを試みます。
 
 ```bash
@@ -60,7 +60,7 @@ python3 -m pip install pyserial
 4. **Tools > Board > Boards Manager** を開きます。
 5. `CP8000` を検索します。
 6. `CHIP-PUMP CP8000 Boards` をインストールします。
-7. **CHIP-PUMP CP8001 SOP16** などのボードを選択します。
+7. **CP801X-Mini** などのボードを選択します。
 8. 正しい serial port を選択し、サンプルをアップロードします。
 
 ### Windows Boards Manager キャッシュ
@@ -103,7 +103,7 @@ Boards Manager のバージョンドロップダウンを再確認してくだ�
 arduino-cli core update-index \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.1 \
+arduino-cli core install chippump:cp8000@0.1.2 \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
@@ -117,9 +117,9 @@ arduino-cli compile \
 
 ## 現在のパッケージ
 
-`0.1.1` には次の内容が含まれます。
+`0.1.2` には次の内容が含まれます。
 
-- CP8000 Arduino core、および CP8001 SOP16 / CP8003 SOP16 のボード定義。
+- CP8000 Arduino core、および CP801X-Mini のボード定義。
 - ボードスコープのサンプルカテゴリ：
   `01.GPIO`、`02.I2C_SPI`、`03.BLE`、`04.Serial`、`05.24GRadio`、
   `06.Watchdog`、`07.OTA`。

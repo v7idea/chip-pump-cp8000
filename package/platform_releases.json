@@ -124,5 +124,19 @@
         "version": "0.1.0-alpha.9"
       }
     ]
+  },
+  {
+    "version": "0.1.2",
+    "archiveFileName": "chippump-cp8000-0.1.2.tar.gz",
+    "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.2/chippump-cp8000-0.1.2.tar.gz",
+    "checksum": "SHA-256:3b4b731ceb1cf91823f153083ab337fd12d2344e5d2ee581da059ed84158b65b",
+    "size": "1848633",
+    "toolsDependencies": [
+      {
+        "packager": "chippump",
+        "name": "cp8000-xuantie-elf-newlib",
+        "version": "0.1.0-alpha.9"
+      }
+    ]
   }
 ]

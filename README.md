@@ -30,7 +30,7 @@ this `boards-manager` release asset, not to a versioned package index.
 - USB-to-UART driver for your adapter or board.
 
 The CP8000 uploader uses Python `pyserial` for serial-port access. Starting in
-`0.1.1`, uploader commands that need a serial port check for
+`0.1.2`, uploader commands that need a serial port check for
 `pyserial` and try to install it automatically with the same Python interpreter:
 
 ```bash
@@ -61,7 +61,7 @@ python3 -m pip install pyserial
 4. Open **Tools > Board > Boards Manager**.
 5. Search `CP8000`.
 6. Install `CHIP-PUMP CP8000 Boards`.
-7. Select a board such as **CHIP-PUMP CP8001 SOP16**.
+7. Select a board such as **CP801X-Mini**.
 8. Select the correct serial port and upload an example.
 
 ### Windows Boards Manager Cache
@@ -103,7 +103,7 @@ Boards Manager version dropdown again.
 arduino-cli core update-index \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.1 \
+arduino-cli core install chippump:cp8000@0.1.2 \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
@@ -117,9 +117,9 @@ arduino-cli compile \
 
 ## Current Package
 
-`0.1.1` includes:
+`0.1.2` includes:
 
-- CP8000 Arduino core and board definitions for CP8001 SOP16 and CP8003 SOP16.
+- CP8000 Arduino core and board definitions for CP801X-Mini.
 - Board-scoped example categories:
   `01.GPIO`, `02.I2C_SPI`, `03.BLE`, `04.Serial`, `05.24GRadio`,
   `06.Watchdog`, and `07.OTA`.

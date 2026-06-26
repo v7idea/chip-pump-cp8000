@@ -12,6 +12,28 @@
         {
           "name": "CHIP-PUMP CP8000 Boards",
           "architecture": "cp8000",
+          "version": "0.1.2",
+          "category": "Contributed",
+          "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.2/chippump-cp8000-0.1.2.tar.gz",
+          "archiveFileName": "chippump-cp8000-0.1.2.tar.gz",
+          "checksum": "SHA-256:e56b51ae756ff76f6cea018991ec7856b59c0f5edc5f50f9f5d198f4edc901b3",
+          "size": "1848666",
+          "boards": [
+            {
+              "name": "CP801X-Mini"
+            }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "chippump",
+              "name": "cp8000-xuantie-elf-newlib",
+              "version": "0.1.0-alpha.9"
+            }
+          ]
+        },
+        {
+          "name": "CHIP-PUMP CP8000 Boards",
+          "architecture": "cp8000",
           "version": "0.1.1",
           "category": "Contributed",
           "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.1/chippump-cp8000-0.1.1.tar.gz",
@@ -20,10 +42,7 @@
           "size": "1887917",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": [
@@ -45,10 +64,7 @@
           "size": "1820052",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": [
@@ -70,10 +86,7 @@
           "size": "1819825",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": [
@@ -95,10 +108,7 @@
           "size": "1884981",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": [
@@ -120,10 +130,7 @@
           "size": "1884822",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": []
@@ -139,10 +146,7 @@
           "size": "1884883",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": []
@@ -158,10 +162,7 @@
           "size": "1884802",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": []
@@ -177,10 +178,7 @@
           "size": "1884840",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": []
@@ -196,10 +194,7 @@
           "size": "1848084",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": []
@@ -215,10 +210,7 @@
           "size": "1845566",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": []
@@ -234,10 +226,7 @@
           "size": "1846684",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": []
@@ -253,10 +242,7 @@
           "size": "1846311",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": []
@@ -272,10 +258,7 @@
           "size": "1846825",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": []
@@ -291,10 +274,7 @@
           "size": "1846900",
           "boards": [
             {
-              "name": "CHIP-PUMP CP8001 SOP16"
-            },
-            {
-              "name": "CHIP-PUMP CP8003 SOP16"
+              "name": "CP801X-Mini"
             }
           ],
           "toolsDependencies": []

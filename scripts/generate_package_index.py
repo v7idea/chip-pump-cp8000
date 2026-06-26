@@ -31,8 +31,7 @@ def platform_entry(
         "checksum": checksum,
         "size": size,
         "boards": [
-            {"name": "CHIP-PUMP CP8001 SOP16"},
-            {"name": "CHIP-PUMP CP8003 SOP16"},
+            {"name": "CP801X-Mini"},
         ],
         "toolsDependencies": tools_dependencies or [],
     }
@@ -52,7 +51,7 @@ def version_key(version: str) -> tuple:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate Arduino Boards Manager package index.")
-    parser.add_argument("--version", default="0.1.1")
+    parser.add_argument("--version", default="0.1.2")
     parser.add_argument("--archive", required=True, help="Path to platform archive")
     parser.add_argument("--url", required=True, help="Download URL for platform archive")
     parser.add_argument("--output", default="package/package_chip-pump_cp8000_index.json")
