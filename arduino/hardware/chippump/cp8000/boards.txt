@@ -2,7 +2,7 @@ menu.boot=Boot Target
 menu.log=SDK Log
 menu.blelog=Vendor BLE Log
 
-cp8001_sop16.name=CP801X-Mini
+cp8001_sop16.name=CP81-Mini
 
 cp8001_sop16.upload.tool=cp8000-uploader
 cp8001_sop16.upload.protocol=cp8000-uart

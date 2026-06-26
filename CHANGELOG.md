@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.3
+
+- Renamed the active Arduino IDE board menu entry from `CP801X-Mini` to
+  `CP81-Mini`.
+- Updated Boards Manager package metadata so the current release lists only
+  `CP81-Mini`.
+
 ## 0.1.2
 
 - Renamed the Arduino IDE board menu entry from `CHIP-PUMP CP8001 SOP16` to
