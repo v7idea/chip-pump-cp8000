@@ -1,4 +1,4 @@
-VERSION ?= 0.1.3
+VERSION ?= 0.1.4
 FQBN ?= chippump:cp8000:cp8001_sop16
 PACKAGE_URL ?= https://github.com/v7idea/chip-pump-cp8000/releases/download/$(VERSION)/chippump-cp8000-$(VERSION).tar.gz
 PACKAGE_WEBSITE_URL ?= https://github.com/v7idea/chip-pump-cp8000

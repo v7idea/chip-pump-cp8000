@@ -28,7 +28,7 @@ release asset，而不是指向特定版本的 package index。
 - 該 Python 安裝需要可使用 `pip`。
 - USB-to-UART 轉接器或開發板所需的驅動程式。
 
-CP8000 uploader 使用 Python `pyserial` 存取 serial port。從 `0.1.3`
+CP8000 uploader 使用 Python `pyserial` 存取 serial port。從 `0.1.4`
 開始，需要 serial port 的 uploader 指令會檢查 `pyserial`，並嘗試用 Arduino IDE
 啟動的同一個 Python 自動安裝：
 
@@ -101,7 +101,7 @@ Additional Boards Manager URL 正確，再檢查 Boards Manager 的版本下拉�
 arduino-cli core update-index \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.3 \
+arduino-cli core install chippump:cp8000@0.1.4 \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
@@ -115,7 +115,7 @@ arduino-cli compile \
 
 ## 目前套件
 
-`0.1.3` 包含：
+`0.1.4` 包含：
 
 - CP8000 Arduino core，以及 CP81-Mini 開發板定義。
 - 依開發板範例分類：

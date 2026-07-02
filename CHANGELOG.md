@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4
+
+- Added an Arduino IDE visible uploader message after the CP8xxx bootloader ACK
+  is received, confirming that the board entered bootloader mode.
+
 ## 0.1.3
 
 - Renamed the active Arduino IDE board menu entry from `CP801X-Mini` to

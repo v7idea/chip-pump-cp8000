@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 import struct
+import sys
 import time
 
 
@@ -569,6 +570,10 @@ class CP8xxxBinaryProtocol:
         )
         try:
             self._enter_bootloader(timeout)
+            print(
+                "cp8000-uploader: bootloader ACK received; CP8000 is in bootloader mode.",
+                file=sys.stderr,
+            )
             time.sleep(0.25)
             return
         except BootloaderSyncError as exc:
