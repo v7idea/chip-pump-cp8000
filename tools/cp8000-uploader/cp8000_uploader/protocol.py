@@ -421,10 +421,42 @@ class CP8xxxBinaryProtocol:
         self.serial = None
         self._firmware_data: bytes | None = None
         self._upload_started_at: float | None = None
+        self._progress_active = False
+        self._progress_last_percent = -1
 
     def _log(self, message: str) -> None:
         if self.request.verbose:
             print(f"cp8xxx-binary: {message}")
+
+    def _status(self, message: str) -> None:
+        if self._progress_active:
+            print(file=sys.stderr, flush=True)
+            self._progress_active = False
+        print(f"cp8000-uploader: {message}", file=sys.stderr, flush=True)
+
+    def _progress_begin(self, total: int) -> None:
+        self._progress_active = True
+        self._progress_last_percent = -1
+        print(f"cp8000-uploader: flashing {total} bytes", file=sys.stderr, flush=True)
+        print("cp8000-uploader: flashing", end="", file=sys.stderr, flush=True)
+
+    def _progress_tick(self, written: int, total: int) -> None:
+        print("..", end="", file=sys.stderr, flush=True)
+        if total <= 0:
+            return
+        percent = min(100, (written * 100) // total)
+        percent_bucket = (percent // 10) * 10
+        if percent_bucket >= 10 and percent_bucket > self._progress_last_percent:
+            self._progress_last_percent = percent_bucket
+            print(f" {percent_bucket}%", end="", file=sys.stderr, flush=True)
+
+    def _progress_end(self) -> None:
+        if self._progress_active:
+            if self._progress_last_percent < 100:
+                print(" 100%", end="", file=sys.stderr, flush=True)
+            print(file=sys.stderr, flush=True)
+            self._progress_active = False
+        self._status("flash complete.")
 
     def _timed(self, label: str, func, *args, **kwargs):
         started_at = time.monotonic()
@@ -570,10 +602,7 @@ class CP8xxxBinaryProtocol:
         )
         try:
             self._enter_bootloader(timeout)
-            print(
-                "cp8000-uploader: bootloader ACK received; CP8000 is in bootloader mode.",
-                file=sys.stderr,
-            )
+            self._status("bootloader ACK received; CP8000 is in bootloader mode.")
             time.sleep(0.25)
             return
         except BootloaderSyncError as exc:
@@ -587,6 +616,7 @@ class CP8xxxBinaryProtocol:
             self._log(f"erase skipped for target {self.request.target}")
             return
 
+        self._status("erasing flash.")
         self._timed("erase-load-flash-algorithm", self._load_flash_algorithm)
         self._timed(
             "erase-load-stub",
@@ -597,6 +627,7 @@ class CP8xxxBinaryProtocol:
         )
         self._timed("erase-self-start", self._self_start, self.FLASH_ERASE_STUB_ADDRESS)
         self._timed("erase-sync", self._sync, 20.0)
+        self._status("erase complete.")
 
     def write(self) -> None:
         data = self.request.firmware.read_bytes()
@@ -639,18 +670,22 @@ class CP8xxxBinaryProtocol:
     def _write_flash_with_ram_helper(self, data: bytes) -> None:
         offset = 0
         block_index = 0
+        self._progress_begin(len(data))
         while offset < len(data):
             self._timed(f"load-flash-algorithm[{block_index}]", self._load_flash_algorithm)
             chunk = data[offset : offset + 0x400]
             self._program_flash_chunk(block_index, self.request.address + offset, chunk, reload_stub=True)
             offset += len(chunk)
             block_index += 1
+            self._progress_tick(offset, len(data))
+        self._progress_end()
         self._log(f"programmed {block_index} flash chunks, {offset} bytes")
 
     def _write_flash_with_cached_ram_helper(self, data: bytes) -> None:
         self._timed("cached-load-flash-algorithm", self._load_flash_algorithm)
         offset = 0
         block_index = 0
+        self._progress_begin(len(data))
         while offset < len(data):
             chunk = data[offset : offset + 0x400]
             try:
@@ -664,6 +699,8 @@ class CP8xxxBinaryProtocol:
                 self._program_flash_chunk(block_index, self.request.address + offset, chunk, reload_stub=True)
             offset += len(chunk)
             block_index += 1
+            self._progress_tick(offset, len(data))
+        self._progress_end()
         self._log(f"programmed {block_index} flash chunks, {offset} bytes in cached mode")
 
     def _program_flash_chunk(self, block_index: int, flash_address: int, chunk: bytes, *, reload_stub: bool) -> None:
@@ -700,6 +737,7 @@ class CP8xxxBinaryProtocol:
 
         data = self._firmware_data if self._firmware_data is not None else self.request.firmware.read_bytes()
         checksum = byte_sum32(data)
+        self._status(f"verifying checksum 0x{checksum:08x}.")
         if self.request.target == "flash":
             command = 0x050001EE
             crc_address = self.FLASH_CRC_ADDRESS
@@ -720,10 +758,12 @@ class CP8xxxBinaryProtocol:
                 encode_cp8xxx_address_command(command, self.FLASH_FINALIZE_ADDRESS),
                 timeout=2.0,
             )
+        self._status("verify complete.")
 
     def reset(self) -> None:
         if self.request.reset_method == "none":
             self._log("reset skipped by --reset-method none")
+            self._status("upload complete; reset skipped by board option.")
             return
 
         run_address = self.request.run_address
@@ -734,6 +774,7 @@ class CP8xxxBinaryProtocol:
             encode_cp8xxx_address_command(0x000004EE, run_address),
             timeout=1.0,
         )
+        self._status("upload complete.")
 
     def upload(self) -> None:
         self._upload_started_at = time.monotonic()
@@ -745,6 +786,9 @@ class CP8xxxBinaryProtocol:
             self.verify()
             self.reset()
         finally:
+            if self._progress_active:
+                print(file=sys.stderr, flush=True)
+                self._progress_active = False
             if self._upload_started_at is not None:
                 self._log(f"timing total-upload {time.monotonic() - self._upload_started_at:.2f}s")
             if self.serial:

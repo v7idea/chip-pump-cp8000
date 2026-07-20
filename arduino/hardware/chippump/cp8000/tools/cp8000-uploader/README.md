@@ -26,6 +26,10 @@ default). Start upload first, then reset or power-cycle the target so the ROM
 bootloader can catch the sequence. This `prelude-sync` default matches the
 hardware-validated vendor GUI flow recovered in commit `db48270`.
 
+During Arduino IDE uploads the uploader prints a reset prompt, confirms the
+bootloader ACK when the CP8000 is really in bootloader mode, then prints flash
+progress dots and 10% progress markers while chunks are programmed.
+
 For A/B probing, `--entry-sync-mode` can be set to `prelude-only` or
 `sync-only`, but the Arduino platform default stays on `prelude-sync`.
 
