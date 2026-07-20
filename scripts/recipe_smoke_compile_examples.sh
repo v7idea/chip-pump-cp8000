@@ -20,6 +20,8 @@ examples=(
   BLEConnectionStatus
   BLEUartEcho
   RF24GSend
+  RF24GReceive
+  BLEOTAHostSender
 )
 
 for sketch in "${examples[@]}"; do

@@ -67,6 +67,10 @@ void cp8000_ble_handle_subscribed(uint8_t enabled);
 void cp8000_ble_handle_write(const uint8_t *data, uint16_t length);
 void cp8000_ble_poll(void);
 
+bool cp8000_ota_available(void);
+int cp8000_ota_state(void);
+void cp8000_ota_boot_check(void);
+
 void cp8000_rf24g_begin(void);
 void cp8000_rf24g_set_channel(uint16_t channel);
 void cp8000_rf24g_set_power(int8_t dbm);

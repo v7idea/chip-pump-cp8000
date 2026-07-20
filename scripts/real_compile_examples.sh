@@ -5,6 +5,8 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 FQBN="${FQBN:-chippump:cp8000:cp8001_sop16}"
 LOG_DIR="${LOG_DIR:-$ROOT/build/real-compile-logs}"
 TOOLCHAIN_HOST_PATH="${CP8000_TOOLCHAIN_HOST_PATH:-}"
+IFS=: read -r fqbn_package fqbn_arch fqbn_board _ <<< "$FQBN"
+FQBN_BASE="${fqbn_package}:${fqbn_arch}:${fqbn_board}"
 
 examples=(
   Blink
@@ -27,6 +29,10 @@ examples=(
   BLEConnectionStatus
   BLEUartEcho
   RF24GSend
+  RF24GReceive
+  BLEOTABootloader
+  BLEOTADevice
+  BLEOTAHostSender
 )
 
 mkdir -p "$LOG_DIR"
@@ -65,11 +71,16 @@ fi
 
 for sketch in "${examples[@]}"; do
   log="$LOG_DIR/$sketch.log"
-  echo "Compiling $sketch with $FQBN"
+  sketch_fqbn="$FQBN"
+  if [[ "$sketch" == "BLEOTADevice" ]]; then
+    sketch_fqbn="$FQBN_BASE:ota=device"
+  fi
+
+  echo "Compiling $sketch with $sketch_fqbn"
   docker "${compose_args[@]}" \
     arduino-cli compile \
     --config-file /workspace/arduino-cli.yaml \
-    --fqbn "$FQBN" \
+    --fqbn "$sketch_fqbn" \
     "/workspace/examples/$sketch" >"$log" 2>&1
   tail -n 4 "$log"
 done

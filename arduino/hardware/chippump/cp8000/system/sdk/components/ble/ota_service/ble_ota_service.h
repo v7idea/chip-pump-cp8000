@@ -187,5 +187,6 @@ struct ota_cfg_info
 
 uint8_t ota_svc_state_get(void);
 void ble_ota_service_init(void);
+void ota_reboot_chk(void);
 
 #endif

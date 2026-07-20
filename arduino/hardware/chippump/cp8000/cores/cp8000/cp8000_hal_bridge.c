@@ -3,10 +3,20 @@
 #include "driver_timer.h"
 #include "driver_iic.h"
 #include "driver_spim.h"
+#include "api_rf_2g4.h"
+#include "ble_ota_service.h"
 #include "mcu_reg_def.h"
 #include "Arduino.h"
 #include <stddef.h>
 #include <string.h>
+
+#ifndef BLE_FOTA_EN
+#define BLE_FOTA_EN 0
+#endif
+
+#ifndef OTA_BOOT_EN
+#define OTA_BOOT_EN 0
+#endif
 
 #define CP8000_SYS_CTRL_BASE    0x40000000UL
 #define CP8000_SYS_RESET_ADDR   (CP8000_SYS_CTRL_BASE + 0x08UL)
@@ -56,6 +66,11 @@ static bool cp8000_adc_started[8] = {false};
 static uint8_t cp8000_i2c_address = 0xFFU;
 static uint16_t cp8000_rf24g_channel = 0;
 static int8_t cp8000_rf24g_power = 0;
+static uint8_t cp8000_rf24g_rx_dma[MAX_RF_LENGTH] = {0};
+static uint8_t cp8000_rf24g_rx_packet[MAX_RF_LENGTH] = {0};
+static volatile uint8_t cp8000_rf24g_rx_length = 0;
+static volatile bool cp8000_rf24g_rx_ready = false;
+static bool cp8000_rf24g_rx_armed = false;
 
 static inline volatile uint32_t *cp8000_reg32(uint32_t address) {
   return (volatile uint32_t *)address;
@@ -532,34 +547,102 @@ void cp8000_sleep_ms(uint32_t ms) {
   delay(ms);
 }
 
+bool cp8000_ota_available(void) {
+#if BLE_FOTA_EN
+  return true;
+#else
+  return false;
+#endif
+}
+
+int cp8000_ota_state(void) {
+#if BLE_FOTA_EN
+  return (int)ota_svc_state_get();
+#else
+  return -1;
+#endif
+}
+
+void cp8000_ota_boot_check(void) {
+#if OTA_BOOT_EN
+  ota_reboot_chk();
+#endif
+}
+
 void cp8000_rf24g_begin(void) {
   cp8000_rf24g_started = true;
+  cp8000_rf24g_rx_ready = false;
+  cp8000_rf24g_rx_length = 0;
+  cp8000_rf24g_rx_armed = false;
+  rf_2g4_init();
 }
 
 void cp8000_rf24g_set_channel(uint16_t channel) {
   cp8000_rf24g_channel = channel;
+  cp8000_rf24g_rx_armed = false;
 }
 
 void cp8000_rf24g_set_power(int8_t dbm) {
   cp8000_rf24g_power = dbm;
+  rf_2g4_set_tx_power(dbm);
 }
 
 bool cp8000_rf24g_send(const uint8_t *payload, uint8_t length) {
-  (void)payload;
-  (void)length;
   if (!cp8000_rf24g_started) {
     cp8000_rf24g_begin();
   }
-  (void)cp8000_rf24g_channel;
-  (void)cp8000_rf24g_power;
-  return false;
+  if (payload == NULL || length == 0 || length > MAX_RF_LENGTH) {
+    return false;
+  }
+
+  rf_2g4_set_tx_power(cp8000_rf24g_power);
+  rf_2g4_tx_data((uint8_t *)payload, length, cp8000_rf24g_channel);
+  cp8000_rf24g_rx_armed = false;
+  return true;
+}
+
+static void cp8000_rf24g_arm_rx(void) {
+  rf_2g4_rx_data(cp8000_rf24g_rx_dma, sizeof(cp8000_rf24g_rx_dma), cp8000_rf24g_channel);
+  rf_2g4_rx_start((uint8_t)cp8000_rf24g_channel);
+  cp8000_rf24g_rx_armed = true;
 }
 
 int cp8000_rf24g_receive(uint8_t *payload, uint8_t max_length) {
-  (void)payload;
-  (void)max_length;
   if (!cp8000_rf24g_started) {
     cp8000_rf24g_begin();
   }
+  if (payload == NULL || max_length == 0) {
+    return 0;
+  }
+
+  if (cp8000_rf24g_rx_ready) {
+    uint8_t length = cp8000_rf24g_rx_length;
+    if (length > max_length) {
+      length = max_length;
+    }
+    memcpy(payload, cp8000_rf24g_rx_packet, length);
+    cp8000_rf24g_rx_ready = false;
+    cp8000_rf24g_rx_length = 0;
+    cp8000_rf24g_rx_armed = false;
+    cp8000_rf24g_arm_rx();
+    return length;
+  }
+
+  if (!cp8000_rf24g_rx_armed) {
+    cp8000_rf24g_arm_rx();
+  }
   return 0;
+}
+
+void rf_2g4_rx_handler(uint8_t *data, uint8_t len) {
+  if (data == NULL || len == 0) {
+    return;
+  }
+  if (len > MAX_RF_LENGTH) {
+    len = MAX_RF_LENGTH;
+  }
+  memcpy(cp8000_rf24g_rx_packet, data, len);
+  cp8000_rf24g_rx_length = len;
+  cp8000_rf24g_rx_ready = true;
+  cp8000_rf24g_rx_armed = false;
 }

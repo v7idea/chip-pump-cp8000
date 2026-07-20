@@ -113,6 +113,19 @@ arduino-cli compile \
   arduino/hardware/chippump/cp8000/libraries/01.GPIO/examples/Blink
 ```
 
+## BLE OTA 範例
+
+`07.OTA` 目前包含 `BLEOTADevice`、`BLEOTAHostSender`、`BLEOTABootloader`。
+
+- 編譯 `BLEOTADevice` 時，請在 **Tools > OTA Mode > BLE OTA Device App** 啟用
+  OTA app 模式。這會將 app 編譯到 flash address `0x10001000`，並啟用 vendor
+  BLE OTA service。
+- `BLEOTAHostSender` 內含電腦端 BLE 傳送工具 `send_ota.py`：先安裝
+  `python3 -m pip install bleak`，再執行
+  `python3 send_ota.py firmware.bin --name CP8000-OTA`。
+- `BLEOTABootloader` 用來說明 bootloader 角色。真正 OTA 流程需要先將最小 OTA
+  bootloader 放在 `0x10000000`，之後 OTA app 才能透過 BLE 寫入 app slot。
+
 ## 目前套件
 
 `0.1.4` 包含：

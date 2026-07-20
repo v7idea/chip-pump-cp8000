@@ -1,4 +1,7 @@
 .DS_Store
+.arduino15/
+__pycache__/
+*.pyc
 *.log
 *.tmp
 package/stage/

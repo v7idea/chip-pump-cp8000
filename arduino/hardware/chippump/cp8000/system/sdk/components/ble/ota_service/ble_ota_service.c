@@ -96,7 +96,8 @@ void ble_ota_service_init(void)
 }
 
 
-static struct ota_param ota_params ={.state = 0};
+static struct ota_finish_ind ota_finish = {0};
+static struct ota_param ota_params ={.state = 0, .finish_ind = &ota_finish};
 
 bool ota_svc_fw_signature_check(struct ota_digest *digest,struct ota_signature *signature)
 {
@@ -238,13 +239,30 @@ static ssize_t ota_svc_ctrl_rcv(struct bt_conn *conn, const struct bt_gatt_attr 
 
     switch((ctrl->type&0xFF))
     {
-        case OTA_DIGEST_CMD:
-            if(ctrl->u.signature.idx)
-                memcpy(&ota_params.digest.data[0],ctrl->u.digest.data,OTA_DIGEST_CMD_DATA_LENGTH);
-            else
-                memcpy(&ota_params.signature.data[0],ctrl->u.signature.data,OTA_SIGNATURE_CMD_DATA_LENGTH);
-
+        case OTA_SIGNATURE_CMD:
+        {
+            uint8_t idx = ctrl->u.signature.idx;
+            if (idx < (sizeof(ota_params.signature.data) / OTA_SIGNATURE_CMD_DATA_LENGTH))
+            {
+                memcpy(&ota_params.signature.data[idx * OTA_SIGNATURE_CMD_DATA_LENGTH],
+                       ctrl->u.signature.data,
+                       OTA_SIGNATURE_CMD_DATA_LENGTH);
+            }
             ota_svc_state_set(OTA_IDLE);
+        }
+        break;
+
+        case OTA_DIGEST_CMD:
+        {
+            uint8_t idx = ctrl->u.digest.idx;
+            if (idx < (sizeof(ota_params.digest.data) / OTA_DIGEST_CMD_DATA_LENGTH))
+            {
+                memcpy(&ota_params.digest.data[idx * OTA_DIGEST_CMD_DATA_LENGTH],
+                       ctrl->u.digest.data,
+                       OTA_DIGEST_CMD_DATA_LENGTH);
+            }
+            ota_svc_state_set(OTA_IDLE);
+        }
         break;
 
         case OTA_START_REQ:
@@ -254,6 +272,7 @@ static ssize_t ota_svc_ctrl_rcv(struct bt_conn *conn, const struct bt_gatt_attr 
                 ota_params.con_hdl = conn;
                 ota_params.new_image.base = OTA_IMAGE_STORE_BASE_ADDR;//ctrl->u.start_req.new_image_base;//
                 ota_params.new_image.size = ctrl->u.start_req.new_image_size;
+                ota_params.finish_ind->new_image = &ota_params.new_image;
                 ota_params.segment_data_max_length = ctrl->u.start_req.segment_data_max_length;
                 enum ota_start_cfm_status status;
                 if(ota_svc_fw_signature_check(&ota_params.digest, &ota_params.signature))

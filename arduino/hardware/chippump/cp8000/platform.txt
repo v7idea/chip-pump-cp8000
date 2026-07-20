@@ -20,9 +20,10 @@ compiler.ar.flags=rcs
 compiler.ldflags=-mcpu={build.mcu} -nostartfiles -Wl,--gc-sections -Wl,--allow-multiple-definition -Wl,-L{runtime.platform.path}/system/linker -T{runtime.platform.path}/system/linker/{build.linker} --specs=nano.specs -flto -Wl,-Map,{build.path}/{build.project_name}.map
 compiler.sdk.includes=-I{runtime.platform.path}/system/sdk/components/ble/app -I{runtime.platform.path}/system/sdk/components/ble/ota_service -I{runtime.platform.path}/system/sdk/components/ble/service -I{runtime.platform.path}/system/sdk/components/driver -I{runtime.platform.path}/system/sdk/components/header -I{runtime.platform.path}/system/sdk/components/libraries -I{runtime.platform.path}/system/sdk/components/libraries/24g -I{runtime.platform.path}/system/sdk/components/libraries/ble -I{runtime.platform.path}/system/sdk/components/misc -I{runtime.platform.path}/system/sdk/modules/hal_clock -I{runtime.platform.path}/system/sdk/modules/hal_otp_rw
 
-build.extra_flags=-DBLE_FOTA_EN=0 -DBLE_MODE_SEL=2 -DBLE_SLEEP_EN=0
+build.extra_flags={build.ota_flags} -DBLE_MODE_SEL=2 -DBLE_SLEEP_EN=0
 build.log_flags=
 build.vendor_ble_log_flags=-DCP8000_VENDOR_BLE_LOG_ENABLED=0
+build.sdk_libs=-lstartlib -lblebase -lblestack -l2g4_base -lrf2g4
 
 recipe.hooks.sketch.prebuild.1.pattern=
 
@@ -32,7 +33,7 @@ recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" -c {compiler.S.flags} -MMD 
 
 recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{archive_file_path}" "{object_file}"
 
-recipe.c.combine.pattern="{compiler.path}{compiler.cxx.cmd}" -o "{build.path}/{build.project_name}.elf" -L{runtime.platform.path}/system/libs {object_files} -Wl,--start-group "{archive_file_path}" -lstartlib -lblebase -lblestack -l2g4_base -lrf2g4 -Wl,--end-group {compiler.ldflags}
+recipe.c.combine.pattern="{compiler.path}{compiler.cxx.cmd}" -o "{build.path}/{build.project_name}.elf" -L{runtime.platform.path}/system/libs {object_files} -Wl,--start-group "{archive_file_path}" {build.sdk_libs} -Wl,--end-group {compiler.ldflags}
 
 recipe.objcopy.eep.pattern=
 recipe.objcopy.hex.pattern="{compiler.path}{compiler.objcopy.cmd}" -O ihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
