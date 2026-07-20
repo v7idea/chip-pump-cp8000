@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.5
+
+- Added BLE OTA Arduino examples, including a device app, a host sender
+  reference, and a bootloader reference flow.
+- Added `CP8000OTA` library support and OTA board menu options for the OTA app
+  flash slot.
+- Added the `RF24GReceive` example and CP8000 2.4G receive bridge support.
+- Improved CP8xxx uploader console output with bootloader ACK confirmation,
+  erase/write/verify status, progress dots, and 10% flash progress markers.
+
 ## 0.1.4
 
 - Added an Arduino IDE visible uploader message after the CP8xxx bootloader ACK

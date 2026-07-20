@@ -29,7 +29,7 @@ https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/pack
 - 使用する USB-to-UART アダプターまたはボード用のドライバー。
 
 CP8000 uploader は serial port アクセスに Python `pyserial` を使用します。
-`0.1.4` 以降、serial port が必要な uploader コマンドは `pyserial` を確認し、
+`0.1.5` 以降、serial port が必要な uploader コマンドは `pyserial` を確認し、
 Arduino IDE から起動されたものと同じ Python で自動インストールを試みます。
 
 ```bash
@@ -103,7 +103,7 @@ Boards Manager のバージョンドロップダウンを再確認してくだ�
 arduino-cli core update-index \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.4 \
+arduino-cli core install chippump:cp8000@0.1.5 \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
@@ -131,7 +131,7 @@ arduino-cli compile \
 
 ## 現在のパッケージ
 
-`0.1.4` には次の内容が含まれます。
+`0.1.5` には次の内容が含まれます。
 
 - CP8000 Arduino core、および CP81-Mini のボード定義。
 - ボードスコープのサンプルカテゴリ：
