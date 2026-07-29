@@ -12,6 +12,28 @@
         {
           "name": "CHIP-PUMP CP8000 Boards",
           "architecture": "cp8000",
+          "version": "0.1.6",
+          "category": "Contributed",
+          "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.6/chippump-cp8000-0.1.6.tar.gz",
+          "archiveFileName": "chippump-cp8000-0.1.6.tar.gz",
+          "checksum": "SHA-256:6ecc7e4345e520e73c57f39a469c4b2e463b79e193c60615bc24a6343ad776e8",
+          "size": "1852953",
+          "boards": [
+            {
+              "name": "CP81-Mini"
+            }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "chippump",
+              "name": "cp8000-xuantie-elf-newlib",
+              "version": "0.1.0-alpha.9"
+            }
+          ]
+        },
+        {
+          "name": "CHIP-PUMP CP8000 Boards",
+          "architecture": "cp8000",
           "version": "0.1.5",
           "category": "Contributed",
           "url": "https://github.com/v7idea/chip-pump-cp8000/releases/download/0.1.5/chippump-cp8000-0.1.5.tar.gz",

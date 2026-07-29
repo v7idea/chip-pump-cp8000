@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.6
+
+- Fixed Windows Boards Manager install failures caused by symlinks in the
+  platform archive's legacy local toolchain wrapper directory.
+- Excluded the local `tools/riscv64-unknown-elf` wrapper directory from release
+  platform archives because builds now use the Boards Manager managed XuanTie
+  toolchain through `toolsDependencies`.
+- Added a packaging guard that fails the release build if any symlink is present
+  in the staged platform archive.
+
 ## 0.1.5
 
 - Added BLE OTA Arduino examples, including a device app, a host sender

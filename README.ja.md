@@ -29,7 +29,7 @@ https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/pack
 - 使用する USB-to-UART アダプターまたはボード用のドライバー。
 
 CP8000 uploader は serial port アクセスに Python `pyserial` を使用します。
-`0.1.5` 以降、serial port が必要な uploader コマンドは `pyserial` を確認し、
+`0.1.6` 以降、serial port が必要な uploader コマンドは `pyserial` を確認し、
 Arduino IDE から起動されたものと同じ Python で自動インストールを試みます。
 
 ```bash
@@ -103,7 +103,7 @@ Boards Manager のバージョンドロップダウンを再確認してくだ�
 arduino-cli core update-index \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.5 \
+arduino-cli core install chippump:cp8000@0.1.6 \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
@@ -131,7 +131,7 @@ arduino-cli compile \
 
 ## 現在のパッケージ
 
-`0.1.5` には次の内容が含まれます。
+`0.1.6` には次の内容が含まれます。
 
 - CP8000 Arduino core、および CP81-Mini のボード定義。
 - ボードスコープのサンプルカテゴリ：
@@ -141,6 +141,8 @@ arduino-cli compile \
 - serial access が必要な uploader コマンドの初回実行時に `pyserial` を自動インストール。
 - サンプルに必要な vendor CP8000 runtime libraries と linker assets。
 - Boards Manager 管理の `cp8000-xuantie-elf-newlib@0.1.0-alpha.9` toolchain パッケージ。
+- Windows Boards Manager のインストール修正：リリースアーカイブからローカルの
+  symlink ベース toolchain wrapper を除外し、管理対象 toolchain パッケージを使用します。
 
 ## 注意
 
