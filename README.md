@@ -76,6 +76,11 @@ Manual Reset is also the fallback when a sketch is stalled or sleeping, stops
 servicing Core polling, or changes UART0 to a baud other than 115200. The sketch
 does not need to define its own reset handler.
 
+This flow has been hardware-validated with a CH340 USB-to-TTL adapter. An old
+firmware image correctly required the manual Reset fallback; after installing
+the updated Core, the next upload received the application reset ACK followed
+by the ROM bootloader ACK and completed without pressing Reset.
+
 ### Windows Boards Manager Cache
 
 Arduino IDE on Windows can keep an old Boards Manager package index even after
