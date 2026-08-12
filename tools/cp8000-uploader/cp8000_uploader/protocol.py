@@ -23,6 +23,8 @@ class UploadRequest:
     protocol: str = "stub"
     dwc_sequence: str = "UXTDWU"
     connect_timeout: float = 20.0
+    app_reset_mode: str = "auto"
+    app_reset_timeout: float = 1.0
     boot_reset_method: str = "none"
     entry_sync_mode: str = "prelude-sync"
     reset_method: str = "self-start"
@@ -397,6 +399,8 @@ class CP8xxxBinaryProtocol:
         "D4C3B2A1EE0600000E00EC039F00000024010840130000001F00"
     )
     ACK_MAGIC = b"\xD4\xC3\xB2\xA1\xEF"
+    APP_RESET_REQUEST = b"\x1bCP8000_UPLOAD_RESET:8F3A91C7\r\n"
+    APP_RESET_ACK = b"\x1bCP8000_UPLOAD_RESET_ACK:8F3A91C7\r\n"
     FLASH_CRC_ADDRESS = 0x1003E000
     FLASH_FINALIZE_ADDRESS = 0x1003F000
     FLASH_ERASE_BLOCKS = 0x40
@@ -508,6 +512,25 @@ class CP8xxxBinaryProtocol:
         self._log(f"< {label}: {data[:128].hex()} ({len(data)} bytes)")
         return data
 
+    def _request_application_reset(self, timeout: float) -> bool:
+        self.serial.reset_input_buffer()
+        self.serial.write(self.APP_RESET_REQUEST)
+        self.serial.flush()
+        deadline = time.monotonic() + max(0.05, timeout)
+        data = bytearray()
+        while time.monotonic() < deadline:
+            chunk = self.serial.read(128)
+            if chunk:
+                data.extend(chunk)
+                if self.APP_RESET_ACK in data:
+                    self._log(f"< application reset ACK: {bytes(data).hex()}")
+                    return True
+                if len(data) > 512:
+                    del data[:-256]
+            time.sleep(0.005)
+        self._log(f"application reset ACK not received; captured {bytes(data).hex()}")
+        return False
+
     def _sync(self, timeout: float) -> None:
         sync = self.SYNC.encode()
         deadline = time.monotonic() + timeout
@@ -594,6 +617,21 @@ class CP8xxxBinaryProtocol:
     def connect(self) -> None:
         baud = parse_baud(self.request.baud) or 115200
         self.serial = self._open(baud)
+        app_reset_mode = (self.request.app_reset_mode or "auto").lower()
+        if app_reset_mode not in ("auto", "disabled", "required"):
+            raise ValueError(f"unknown application reset mode: {app_reset_mode}")
+        if app_reset_mode != "disabled":
+            self._status(f"requesting software-assisted bootloader entry at {baud} baud.")
+            if self._request_application_reset(self.request.app_reset_timeout):
+                self._status("application reset ACK received; CP8000 accepted software reset.")
+                time.sleep(0.10)
+                self.serial.reset_input_buffer()
+            elif app_reset_mode == "required":
+                raise BootloaderSyncError("application reset ACK was required but not received")
+            else:
+                self._status("application reset ACK not received; press RESET or power-cycle the board now.")
+        else:
+            self._status("automatic application reset is disabled; press RESET or power-cycle the board now.")
         apply_serial_boot_reset(self.serial, self.request.boot_reset_method, self._log)
         timeout = max(0.5, self.request.connect_timeout)
         self._log(

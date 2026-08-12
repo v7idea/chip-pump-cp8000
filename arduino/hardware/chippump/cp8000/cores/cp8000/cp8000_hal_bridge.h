@@ -9,6 +9,8 @@ extern "C" {
 #endif
 
 void cp8000_core_init(void);
+void cp8000_upload_reset_init(void);
+void cp8000_system_reset(void);
 
 void cp8000_gpio_pin_mode(uint8_t pin, uint8_t mode);
 void cp8000_gpio_write(uint8_t pin, uint8_t value);

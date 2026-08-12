@@ -45,11 +45,23 @@ public:
   using Print::write;
   size_t write(uint8_t value) override;
   size_t write(const uint8_t *buffer, size_t size) override;
+  void poll(void);
 
 private:
+  static const uint8_t RX_BUFFER_SIZE = 128;
+
+  bool enqueue(uint8_t value);
+  int dequeue(void);
+
   uint8_t uart_index_;
   bool enabled_;
   int peeked_;
+  uint8_t rx_buffer_[RX_BUFFER_SIZE];
+  uint8_t rx_head_;
+  uint8_t rx_tail_;
+  uint8_t upload_match_;
 };
+
+extern "C" void cp8000_serial_poll(void);
 
 #endif

@@ -30,6 +30,14 @@ During Arduino IDE uploads the uploader prints a reset prompt, confirms the
 bootloader ACK when the CP8000 is really in bootloader mode, then prints flash
 progress dots and 10% progress markers while chunks are programmed.
 
+Firmware built with `Auto Upload Reset > Enabled` listens on UART0 at 115200
+baud for a long, versioned uploader request. The Core sends an acknowledgement,
+flushes UART0, and performs a software reset before the uploader starts the
+normal ROM prelude/sync sequence. `--app-reset-mode auto` is the default and
+falls back to a physical Reset/power-cycle when the running firmware is old,
+stalled, sleeping, or has changed UART0 to another baud. Use
+`--app-reset-mode disabled` to always use the manual workflow.
+
 For A/B probing, `--entry-sync-mode` can be set to `prelude-only` or
 `sync-only`, but the Arduino platform default stays on `prelude-sync`.
 

@@ -64,6 +64,18 @@ python3 -m pip install pyserial
 7. Select a board such as **CP81-Mini**.
 8. Select the correct serial port and upload an example.
 
+### Automatic Upload Reset
+
+`Tools > Auto Upload Reset > Enabled` is the default. Firmware built with this
+option includes a small Core listener on the UART0 upload pins at 115200 baud.
+On the next upload, the uploader asks the running firmware to acknowledge and
+perform a software reset, then confirms when the ROM bootloader responds.
+
+The first upload from older firmware still needs the physical Reset button.
+Manual Reset is also the fallback when a sketch is stalled or sleeping, stops
+servicing Core polling, or changes UART0 to a baud other than 115200. The sketch
+does not need to define its own reset handler.
+
 ### Windows Boards Manager Cache
 
 Arduino IDE on Windows can keep an old Boards Manager package index even after

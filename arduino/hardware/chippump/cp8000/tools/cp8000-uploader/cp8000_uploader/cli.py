@@ -81,10 +81,10 @@ def print_upload_reset_notice(args: argparse.Namespace) -> None:
     timeout = getattr(args, "connect_timeout", 20.0)
     port = getattr(args, "port", "")
     print("cp8000-uploader: upload is starting.", file=sys.stderr)
-    print(
-        "cp8000-uploader: reset or power-cycle the CP8000 board now to enter bootloader mode.",
-        file=sys.stderr,
-    )
+    if getattr(args, "app_reset_mode", "auto") == "disabled":
+        print("cp8000-uploader: automatic reset is disabled; prepare to press Reset.", file=sys.stderr)
+    else:
+        print("cp8000-uploader: trying the running Core's software-reset handshake first.", file=sys.stderr)
     print(
         f"cp8000-uploader: waiting up to {timeout:.1f}s for bootloader on {port}.",
         file=sys.stderr,
@@ -112,6 +112,18 @@ def build_parser() -> argparse.ArgumentParser:
         type=float,
         default=20.0,
         help="Seconds to keep probing for the bootloader before upload starts",
+    )
+    upload.add_argument(
+        "--app-reset-mode",
+        choices=["auto", "disabled", "required"],
+        default="auto",
+        help="Ask the running Arduino Core to reset before ROM bootloader sync; auto falls back to manual Reset",
+    )
+    upload.add_argument(
+        "--app-reset-timeout",
+        type=float,
+        default=1.0,
+        help="Seconds to wait for the running Arduino Core reset acknowledgement",
     )
     upload.add_argument(
         "--boot-reset-method",
@@ -218,6 +230,8 @@ def cmd_upload(args: argparse.Namespace) -> int:
         print(f"protocol={args.protocol}")
         print(f"dwc_sequence={args.dwc_sequence}")
         print(f"connect_timeout={args.connect_timeout}")
+        print(f"app_reset_mode={args.app_reset_mode}")
+        print(f"app_reset_timeout={args.app_reset_timeout}")
         print(f"boot_reset_method={args.boot_reset_method}")
         print(f"entry_sync_mode={args.entry_sync_mode}")
         print(f"reset_method={args.reset_method}")
@@ -242,6 +256,8 @@ def cmd_upload(args: argparse.Namespace) -> int:
         protocol=args.protocol,
         dwc_sequence=args.dwc_sequence,
         connect_timeout=args.connect_timeout,
+        app_reset_mode=args.app_reset_mode,
+        app_reset_timeout=args.app_reset_timeout,
         boot_reset_method=args.boot_reset_method,
         entry_sync_mode=args.entry_sync_mode,
         reset_method=args.reset_method,

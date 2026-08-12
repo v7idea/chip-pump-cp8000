@@ -1,11 +1,16 @@
 #include "Arduino.h"
 #include "cp8000_hal_bridge.h"
 
+extern void cp8000_serial_poll(void);
+
 void init(void) {
   cp8000_core_init();
+  cp8000_upload_reset_init();
 }
 
-void yield(void) {}
+void yield(void) {
+  cp8000_serial_poll();
+}
 
 unsigned long millis(void) {
   return (unsigned long)(cp8000_time_micros() / 1000ULL);

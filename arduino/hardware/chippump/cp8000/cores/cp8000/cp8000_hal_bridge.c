@@ -18,6 +18,10 @@
 #define OTA_BOOT_EN 0
 #endif
 
+#ifndef CP8000_AUTO_UPLOAD_RESET
+#define CP8000_AUTO_UPLOAD_RESET 1
+#endif
+
 #define CP8000_SYS_CTRL_BASE    0x40000000UL
 #define CP8000_SYS_RESET_ADDR   (CP8000_SYS_CTRL_BASE + 0x08UL)
 #define CP8000_SYS_CLKSEL_ADDR  (CP8000_SYS_CTRL_BASE + 0x24UL)
@@ -82,6 +86,18 @@ static inline volatile uint8_t *cp8000_reg8(uint32_t address) {
 
 void cp8000_core_init(void) {
   *cp8000_reg32(CP8000_WDT_CFG_ADDR) = 0U;
+}
+
+void cp8000_upload_reset_init(void) {
+#if CP8000_AUTO_UPLOAD_RESET
+  cp8000_uart_begin(0U, 115200U);
+#endif
+}
+
+void cp8000_system_reset(void) {
+  *cp8000_reg32(CP8000_SYS_RESET_ADDR) = 1U;
+  while (1) {
+  }
 }
 
 uint64_t cp8000_time_micros(void) {

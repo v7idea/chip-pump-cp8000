@@ -2,6 +2,7 @@ menu.boot=Boot Target
 menu.log=SDK Log
 menu.blelog=Vendor BLE Log
 menu.ota=OTA Mode
+menu.autoreset=Auto Upload Reset
 
 cp8001_sop16.name=CP81-Mini
 
@@ -11,6 +12,7 @@ cp8001_sop16.upload.maximum_size=262144
 cp8001_sop16.upload.maximum_data_size=13824
 cp8001_sop16.upload.speed=default
 cp8001_sop16.upload.target=flash
+cp8001_sop16.upload.app_reset_mode=auto
 
 cp8001_sop16.bootloader.tool=cp8000-uploader
 cp8001_sop16.bootloader.file=
@@ -22,8 +24,9 @@ cp8001_sop16.build.core=cp8000
 cp8001_sop16.build.variant=cp8001_sop16
 cp8001_sop16.build.flash_base=0x10000000
 cp8001_sop16.build.linker=cp800x_ble2g4_app.ld
-cp8001_sop16.build.extra_flags=-DARDUINO_CP8001_SOP16 -DCP8000_FLASH_BASE={build.flash_base} {build.ota_flags}
+cp8001_sop16.build.extra_flags=-DARDUINO_CP8001_SOP16 -DCP8000_FLASH_BASE={build.flash_base} {build.ota_flags} {build.auto_reset_flags}
 cp8001_sop16.build.ota_flags=-DBLE_FOTA_EN=0 -DOTA_BOOT_EN=0
+cp8001_sop16.build.auto_reset_flags=-DCP8000_AUTO_UPLOAD_RESET=1
 cp8001_sop16.build.sdk_libs=-lstartlib -lblebase -lblestack -l2g4_base -lrf2g4
 
 cp8001_sop16.menu.boot.flash=Flash
@@ -43,6 +46,13 @@ cp8001_sop16.menu.blelog.disabled=Disabled
 cp8001_sop16.menu.blelog.disabled.build.vendor_ble_log_flags=-DCP8000_VENDOR_BLE_LOG_ENABLED=0
 cp8001_sop16.menu.blelog.enabled=Enabled
 cp8001_sop16.menu.blelog.enabled.build.vendor_ble_log_flags=-DCP8000_VENDOR_BLE_LOG_ENABLED=1
+
+cp8001_sop16.menu.autoreset.enabled=Enabled
+cp8001_sop16.menu.autoreset.enabled.build.auto_reset_flags=-DCP8000_AUTO_UPLOAD_RESET=1
+cp8001_sop16.menu.autoreset.enabled.upload.app_reset_mode=auto
+cp8001_sop16.menu.autoreset.disabled=Disabled
+cp8001_sop16.menu.autoreset.disabled.build.auto_reset_flags=-DCP8000_AUTO_UPLOAD_RESET=0
+cp8001_sop16.menu.autoreset.disabled.upload.app_reset_mode=disabled
 
 cp8001_sop16.menu.ota.disabled=Disabled
 cp8001_sop16.menu.ota.disabled.build.ota_flags=-DBLE_FOTA_EN=0 -DOTA_BOOT_EN=0
