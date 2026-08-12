@@ -1,5 +1,5 @@
 name=CHIP-PUMP CP8000 Boards
-version=0.1.6
+version=0.1.7
 
 compiler.path={runtime.tools.cp8000-xuantie-elf-newlib.path}/bin/
 compiler.c.cmd=riscv64-unknown-elf-gcc

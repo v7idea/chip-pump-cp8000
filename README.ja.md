@@ -103,7 +103,7 @@ Boards Manager のバージョンドロップダウンを再確認してくだ�
 arduino-cli core update-index \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.6 \
+arduino-cli core install chippump:cp8000@0.1.7 \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
@@ -131,13 +131,15 @@ arduino-cli compile \
 
 ## 現在のパッケージ
 
-`0.1.6` には次の内容が含まれます。
+`0.1.7` には次の内容が含まれます。
 
 - CP8000 Arduino core、および CP81-Mini のボード定義。
 - ボードスコープのサンプルカテゴリ：
   `01.GPIO`、`02.I2C_SPI`、`03.BLE`、`04.Serial`、`05.24GRadio`、
   `06.Watchdog`、`07.OTA`。
 - Windows、macOS、Linux 向けの CP8xxx UART uploader。
+- application ACK、ROM bootloader ACK、および失敗時の手動 Reset フォールバックを
+  含む、ハードウェア検証済みの software-assisted bootloader entry。
 - serial access が必要な uploader コマンドの初回実行時に `pyserial` を自動インストール。
 - サンプルに必要な vendor CP8000 runtime libraries と linker assets。
 - Boards Manager 管理の `cp8000-xuantie-elf-newlib@0.1.0-alpha.9` toolchain パッケージ。

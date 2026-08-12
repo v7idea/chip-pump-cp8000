@@ -101,7 +101,7 @@ Additional Boards Manager URL 正確，再檢查 Boards Manager 的版本下拉�
 arduino-cli core update-index \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.6 \
+arduino-cli core install chippump:cp8000@0.1.7 \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
@@ -128,13 +128,15 @@ arduino-cli compile \
 
 ## 目前套件
 
-`0.1.6` 包含：
+`0.1.7` 包含：
 
 - CP8000 Arduino core，以及 CP81-Mini 開發板定義。
 - 依開發板範例分類：
   `01.GPIO`、`02.I2C_SPI`、`03.BLE`、`04.Serial`、`05.24GRadio`、
   `06.Watchdog`、`07.OTA`。
 - 適用於 Windows、macOS、Linux 的 CP8xxx UART uploader。
+- 已完成硬體驗證的軟體輔助 Bootloader 進入流程，包含 application ACK、ROM
+  bootloader ACK，以及失敗時自動退回手動 Reset。
 - 第一次執行需要 serial access 的 uploader 指令時，自動安裝 `pyserial`。
 - 範例所需的 vendor CP8000 runtime libraries 與 linker assets。
 - Boards Manager 管理的 `cp8000-xuantie-elf-newlib@0.1.0-alpha.9` toolchain 套件。

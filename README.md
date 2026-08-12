@@ -120,7 +120,7 @@ Boards Manager version dropdown again.
 arduino-cli core update-index \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 
-arduino-cli core install chippump:cp8000@0.1.6 \
+arduino-cli core install chippump:cp8000@0.1.7 \
   --additional-urls https://github.com/v7idea/chip-pump-cp8000/releases/download/boards-manager/package_chip-pump_cp8000_index.json
 ```
 
@@ -149,13 +149,15 @@ arduino-cli compile \
 
 ## Current Package
 
-`0.1.6` includes:
+`0.1.7` includes:
 
 - CP8000 Arduino core and board definitions for CP81-Mini.
 - Board-scoped example categories:
   `01.GPIO`, `02.I2C_SPI`, `03.BLE`, `04.Serial`, `05.24GRadio`,
   `06.Watchdog`, and `07.OTA`.
 - CP8xxx UART uploader integration for Windows, macOS, and Linux.
+- Hardware-validated software-assisted bootloader entry with application ACK,
+  ROM bootloader ACK, and automatic manual-Reset fallback.
 - First-run `pyserial` auto-install for uploader commands that need serial
   access.
 - Vendor CP8000 runtime libraries and linker assets required by the examples.

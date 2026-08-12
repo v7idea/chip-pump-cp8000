@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.7
+
+- Added software-assisted bootloader entry over UART0 at 115200 baud.
+- Added the Arduino IDE `Auto Upload Reset` board option, enabled by default.
+- Added a versioned application handshake and acknowledgement before the
+  validated CP8xxx ROM bootloader prelude/sync sequence.
+- Kept automatic fallback to the physical Reset/power-cycle workflow for old,
+  sleeping, stalled, or non-115200 firmware.
+- Added uploader tests for application ACK, required mode, and manual fallback.
+- Hardware-validated a manual first upload followed by an upload without
+  pressing Reset using a CH340 USB-to-TTL adapter.
+
 ## 0.1.6
 
 - Fixed Windows Boards Manager install failures caused by symlinks in the
